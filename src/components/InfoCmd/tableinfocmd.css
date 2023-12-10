@@ -1,0 +1,4 @@
+.section-table {
+    overflow-y: auto;
+    flex: 1;
+}

@@ -1,0 +1,50 @@
+.container-project {
+    border: 3px var(--border-color) solid;
+    border-radius: 1rem;
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+}
+
+.line-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    align-content: space-between;
+    margin: 1rem 0rem;
+}
+
+.column-container {
+    display: flex;
+    flex-direction: column;
+    margin: 1rem 0rem;
+}
+
+.field-project-element {
+    background-color: var(--container-lv1-color);
+    border: 2px var(--border-color) solid;
+    border-radius: 8px;
+    flex: 1;
+    height: 2.4rem;
+}
+
+.line-btn-container {
+    display: flex;
+    margin-top: 15px;
+    margin-bottom: 15px;
+    flex-direction: row;
+    justify-content: flex-end;
+}
+
+.btn-default,
+.btn-edit,
+.btn-delete {
+    margin-right: 1rem;
+}
+
+.field-element-project{
+    margin: 0.2rem 1rem;
+}
+
+.label-field-project {
+    margin-right: 1rem;
+}

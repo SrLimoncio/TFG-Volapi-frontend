@@ -1,0 +1,25 @@
+.message-error-form {
+    margin-top: 5px;
+    color: red;
+}
+
+/* 
+    Elementos que forman parte del form hero
+*/
+
+.section-form-login {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-self: center;
+    text-align: center;
+    
+    width: 25rem;
+    margin-top: 5rem;
+}
+
+.section-form-register {
+    display: block;
+    text-align: left;
+    margin-top: 5rem;
+}

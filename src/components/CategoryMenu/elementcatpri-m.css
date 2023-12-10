@@ -1,0 +1,41 @@
+.row-cat-menu {
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 20px;
+    background-color: var(--container-lv1-color);
+    border-radius: 10px;
+    padding: 1rem;
+}
+
+
+.section-cat {
+    padding: 5px; /* Relleno interno para el contenido */
+    box-sizing: border-box;
+    padding: 0 0.75rem;
+    min-height: 1px;
+    float: left;
+}
+
+
+.title-cat {
+    font-size: 30px;
+    margin: 3rem 2rem;
+    display: block;
+    text-align: center;
+    font-weight: bold;
+}
+
+
+.descrip-cat {
+    display: block;
+    padding-left: 3rem;
+    padding-right: 3rem ;
+    margin-top: 4rem;
+    margin-bottom: 3rem;
+    font-family: helvetica-now, sans-serif;
+}
+
+
+.section-command {
+    padding: 0.5rem;
+}

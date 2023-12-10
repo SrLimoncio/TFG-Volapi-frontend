@@ -1,0 +1,29 @@
+.grid-project-section {
+    margin: 2rem;
+}
+
+.new-project-content {
+    cursor: pointer; /* Cambia el cursor al pasar el mouse para indicar que es interactivo */
+    user-select: none; /* Evita que el texto dentro del botón sea seleccionable */
+    border: 3px var(--border-color) solid;
+    border-radius: 1rem;
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+    height: 6rem;
+    display: flex;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+}
+.new-project-content:focus {
+    background-color: var(--container-lv1-color);
+}
+
+.icon-new-project {
+    display: inline;
+}
+
+.title-new-project {
+    display: inline;
+    font-size: 1.5rem;
+}

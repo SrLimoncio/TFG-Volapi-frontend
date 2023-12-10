@@ -1,0 +1,34 @@
+.section-col-infocmd {
+    padding-left: 1rem;
+    padding-right: 2rem;
+}
+
+.title-fl {
+    font-size: 30px;
+    display: block;
+    font-weight: bold;
+    color: var(--main-color);
+    margin-left: 5px;
+}
+
+.desc-infocmd {
+    display: block;
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+}
+
+.label-cmd-infocmd {
+    font-size: 1.2rem;
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+}
+
+/* 
+    Modificacion personalizada para el cuadro de codigo
+*/
+.language-bash {
+    margin-top: 1rem;
+    margin-bottom: 2rem;
+    padding: 1rem 2rem;
+    width: 100%;
+}

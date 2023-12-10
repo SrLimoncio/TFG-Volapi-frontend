@@ -1,0 +1,41 @@
+.element-sec {
+    background-color: var(--container-lv2-color );
+    padding: 0.6rem 1rem; /* Relleno interno para el contenido */
+    border: 2px solid var(--border-color);
+    border-radius: 10px;
+    margin: 0.5rem 0;
+}
+
+.container-top-elesec {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.container2-top-elesec {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.title-elesec {
+    font-size: 1.4rem;
+    text-align: left;
+    font-weight: bold;
+    color: var(--title-color);
+}
+
+.status-elesec {
+    font-size: 0.9rem;
+    margin-right: 2rem;
+}
+
+.description-elesec {
+    display: block;
+    font-size: 1rem;
+    margin-top: 1rem;
+}
+
+.btn-default {
+    width: 6rem;
+}

@@ -1,0 +1,28 @@
+.hero-col {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-self: center;
+    text-align: center;
+    background-color: var(--container-lv1-color);
+}
+
+.tittle-hero {
+    font-family: identify;
+    font-size: 10rem;
+    color: var(--main-color);
+    margin-top: 10rem;
+}
+
+.titleform {
+    font-family: freeline;
+    font-size: 2rem;
+    color: var(--title-color);
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+}
+
+.btn-default-big {
+    margin-top: 5rem;
+    margin-bottom: 5rem;
+}

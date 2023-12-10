@@ -1,0 +1,209 @@
+:root{
+    --main-color            : #3DADE0;
+    --title-color           : #EFF3F5;
+    --text-color            : #C8CDD0;
+    --light-text-color      : #5FA9CB;
+    --border-color          : #526E7A;
+    --container-lv1-color   : #2D3233;
+    --container-lv2-color   : #343A3B;
+    --container-lv3-color   : #3B4142;
+    --body-color            : #282D2E;
+    --info-color            : #DF963C;
+    --error-color           : #E03D52;
+    --second-color          : #3DE0BB;
+}
+
+
+/*
+    Familias de fuestes de caracteres
+*/
+@font-face {
+    font-family: 'helvetica-now';
+    src: url('./assets/fonts/HelveticaNow/HelveticaNow.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'freeline';
+    src: url('./assets/fonts/FreeLine/FreeLine.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'identify';
+    src: url('./assets/fonts/Identify/Identify.ttf') format('truetype');
+}
+
+
+/*
+    Body
+*/
+body {
+    background-color: var(--body-color);
+    color: var(--text-color);
+    font-family: helvetica-now, sans-serif;
+}
+
+
+/*
+    Textos
+*/
+.text_link {
+    color: var(--light-text-color);
+    cursor: pointer; /* Cambia el cursor al pasar sobre el botón */
+}
+
+.title-fl {
+    font-family: freeline, sans-serif;
+    color: var(--title-color);
+}
+
+
+/*
+    Tabla
+*/
+.table th {
+    color: var(--light-text-color);
+}
+
+
+/*
+    Inputs
+*/
+.form-control,
+.form-control:active,
+.form-select,
+.form-select:active {
+    background-color: var(--container-lv3-color);
+    color: var(--text-color);
+    border-color: var(--border-color);
+}
+
+.form-control:focus,
+.form-select:focus {
+    background-color: var(--container-lv3-color);
+    color: var(--text-color);
+    border-color: var(--border-color);
+    box-shadow: 0 0 0 0.1rem var(--border-color);
+}
+
+.form-control:disabled,
+.form-select:disabled {
+    background-color: var(--container-lv1-color);
+    color: var(--text-color);
+    border-color: var(--border-color);
+}
+
+.form-floating.form-hero 
+.form-control~label {
+    color: var(--title-color);
+}
+
+.form-floating.form-hero 
+.form-control~label::after {
+    background-color: transparent;
+}
+
+.form-text {
+    color: var(--error-color);
+    text-align: left;
+}
+
+/* Estilos para autofill */
+.form-control:-webkit-autofill,
+.form-control:-webkit-autofill:hover, 
+.form-control:-webkit-autofill:focus, 
+.form-control:-webkit-autofill:active {
+    background-color: var(--container-lv3-color) !important;
+    color: var(--text-color) !important;
+    border-color: var(--border-color) !important;
+}
+
+
+/*
+    Margenes
+*/
+.margin-top-page-start {
+    margin-top: 10vh;
+}
+
+.margin-top-1 {
+    margin-top: 3rem;
+}
+
+.margin-top-2 {
+    margin-top: 2rem;
+}
+
+.margin_bottom_1 {
+    margin-bottom: 1rem;
+}
+
+
+/*
+    Botones
+*/
+.btn-default {
+    background-color: var(--main-color); /* Color de fondo personalizado (azul) */
+    color: var(--title-color); /* Color del texto */
+    border-color: var(--main-color); /* Color del borde */
+}
+.btn-default:hover {
+    background-color: #2D80A6; /* Cambia el color de fondo en el hover */
+}
+
+.btn-edit {
+    background-color: var(--info-color); /* Color de fondo personalizado (azul) */
+    color: var(--title-color); /* Color del texto */
+    border-color: var(--info-color); /* Color del borde */
+}
+.btn-edit:hover {
+    background-color: #C18134; /* Cambia el color de fondo en el hover */
+}
+
+.btn-delete {
+    background-color: var(--error-color ); /* Color de fondo personalizado (azul) */
+    color: var(--title-color); /* Color del texto */
+    border-color: var(--error-color ); /* Color del borde */
+}
+.btn-delete:hover {
+    background-color: #C33548; /* Cambia el color de fondo en el hover */
+}
+
+.btn-default-big {
+    display: inline-block;
+    padding: 15px 30px; /* Espaciado interno */
+
+    background-color: var(--main-color); /* Color de fondo personalizado (azul) */
+    color: var(--title-color); /* Color del texto */
+    
+    border: none; /* Sin borde */
+    border-radius: 50px; /* Borde redondeado */
+
+    text-align: center; /* Alineación de texto al centro */
+    cursor: pointer; /* Cambia el cursor al pasar sobre el botón */
+
+    font-size: 16px; /* Tamaño de fuente */
+}
+
+.btn-default-big:hover {
+    background-color: #2D80A6; /* Cambia el color de fondo en el hover */
+}
+
+
+/* 
+    Elementos que forman parte de los cuadros de codigo para mostrar el cmd
+*/
+.language-bash {
+    background: var(--container-lv1-color);
+    border: 1px solid var(--border-color);
+    border-radius: 0.25rem;
+    display: block;
+    overflow: auto; /* Como se comporta cuando el contenido desborda el contenedor */
+    white-space: pre; /* Sirve para no quitar los space, tab, saltos de linea, etc */
+}
+
+
+.height-page-block {
+    display: flex;
+    flex-direction: column;
+    height: 90vh;
+}
