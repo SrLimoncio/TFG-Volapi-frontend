@@ -1,16 +1,24 @@
-import axios from "axios";
+import axiosInstance from '../utils/axiosConfig'
 
-const baseURL = 'http://127.0.0.1:5000/dashboard';
+const partURL = 'dashboard/api/';
 
 
-export const getListProjects = async (headers) => {
+export const getListProjects = async () => {
     try {
-      const response = await axios.get(
-        `${baseURL}/api/projects`,
-        { headers }
-      );
+      const response = await axiosInstance.get(`${partURL}projects`);
       return response;
     } catch (error) {
       throw error;
     }
-  };
+};
+
+export const saveEditProject = async (new_nameProject) => {
+  try {
+    const response = await axiosInstance.get(`${partURL}save-edit-project`,
+      { params: { new_nameProject} }
+    );
+    return response;
+  } catch (error) {
+    throw error;
+  }
+};

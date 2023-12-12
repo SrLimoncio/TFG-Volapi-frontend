@@ -10,13 +10,13 @@ import "./infocmd.css";
 
 const InfoCmd = () => {
   const location = useLocation();
-  const commandId = location.state && location.state.id;
+  const commandId = location.state?.id;
 
   const [cmdInfo, setCmdInfo] = useState({
     title: "",
     description: "",
     command: "",
-    commandOutput: {},
+    commandOutput: { headers: [], values: [] },
   });
 
 

@@ -2,17 +2,17 @@ import React, { useState, useEffect } from "react";
 
 import "./tableinfocmd.css";
 
-const TableInfoCmd = (props) => {
-  const [tableHeaders, setTableHeaders] = useState([]);
-  const [tableData, setTableData] = useState([]);
+const TableInfoCmd = ({ headers = [], values = [] }) => {
+  const [tableHeaders, setTableHeaders] = useState(headers);
+  const [tableData, setTableData] = useState(values);
 
   useEffect(() => {
 
     // Actualizar el estado cuando las propiedades cambien
-    setTableHeaders(props.headers || []);
-    setTableData(props.values || []);
+    setTableHeaders(headers);
+    setTableData(values);
 
-  }, [props.headers, props.values]);
+  }, [headers, values]);
 
   return (
     <div className="row section-table margin-top-1">

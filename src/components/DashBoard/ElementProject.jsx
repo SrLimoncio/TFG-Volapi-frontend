@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from "react";
 
-import {} from "../../services/DashboardService.js";
+import { saveEditProject } from "../../services/DashboardService.js";
 
 import "./elementproyect.css";
 
 const ElementProject = ({ project }) => {
   const [datos, setDatos] = useState({
     name: project?.name || "",
-    tool: project?.tool || "",
-    os: project?.os || "",
+    tool: project?.forensic_tool || "",
+    os: project?.memory_os || "",
     memory_path: project?.memory_path || "",
     sha256: project?.sha256 || "",
     sha1: project?.sha1 || "",
@@ -24,22 +24,19 @@ const ElementProject = ({ project }) => {
     });
   };
 
-  const handleEdit = () => {
-    setModoEdicion(!modoEdicion);
-  };
-
   const handleSaveEdit = async () => {
-    // Aquí puedes realizar la llamada a tu backend para actualizar los datos
-    try {
-      // Si el proyecto no tiene ID, indica que es un proyecto nuevo y puedes realizar la llamada para guardarlo
-      if (!project.id) {
-        // Lógica para crear el nuevo proyecto en la base de datos
-        console.log("Crear nuevo proyecto:", datos);
+    // Realiza una verificación adicional antes de guardar
+    if (project.id) {
+      try {
+        // Lógica para actualizar el proyecto en la base de datos
+        const response = await saveEditProject(datos.name);
+
+        setModoEdicion(false);
+
+      } catch (error) {
+        console.error("Error al actualizar datos:", error);
+        // Puedes manejar el error de alguna manera (mostrar un mensaje, etc.)
       }
-      setModoEdicion(false);
-    } catch (error) {
-      console.error("Error al actualizar datos:", error);
-      // Puedes manejar el error de alguna manera (mostrar un mensaje, etc.)
     }
   };
 
@@ -66,7 +63,7 @@ const ElementProject = ({ project }) => {
           <select
             className="form-select"
             id="toolProject"
-            value={datos.tool}
+            value={datos.forensic_tool}
             onChange={handleChange}
             disabled
           >
@@ -81,7 +78,7 @@ const ElementProject = ({ project }) => {
           <select
             className="form-select"
             id="osProject"
-            value={datos.os}
+            value={datos.memory_os}
             onChange={handleChange}
             disabled
           >
@@ -136,7 +133,7 @@ const ElementProject = ({ project }) => {
             <button
               type="button"
               className="btn btn-edit"
-              onClick={handleEdit}
+              onClick={setModoEdicion(true)}
             >
               Edit
             </button>
