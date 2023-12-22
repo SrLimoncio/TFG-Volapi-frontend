@@ -1,10 +1,17 @@
 import React, { useState, useEffect } from "react";
 
-import { saveEditProject } from "../../services/DashboardService.js";
+import {
+  updateProject,
+  activateProject,
+  deleteProject,
+} from "../../services/DashboardService.js";
 
 import "./elementproyect.css";
 
-const ElementProject = ({ project }) => {
+const ElementProject = ({ project, onProjectChange }) => {
+  const [modoEdicion, setModoEdicion] = useState(false);
+
+  // Utiliza datos para trabajar y mantener actualizado el valor de name
   const [datos, setDatos] = useState({
     name: project?.name || "",
     tool: project?.forensic_tool || "",
@@ -12,29 +19,71 @@ const ElementProject = ({ project }) => {
     memory_path: project?.memory_path || "",
     sha256: project?.sha256 || "",
     sha1: project?.sha1 || "",
-    md5: project?.md5 || "",
+    md5: project?.md5 || ""
   });
 
-  const [modoEdicion, setModoEdicion] = useState(false);
+  // Mantén una copia de los datos originales
+  const datosOriginales = {
+    name: project?.name || "",
+    tool: project?.forensic_tool || "",
+    os: project?.memory_os || "",
+    memory_path: project?.memory_path || "",
+    sha256: project?.sha256 || "",
+    sha1: project?.sha1 || "",
+    md5: project?.md5 || ""
+  };
+
+  useEffect(() => {
+    // Solo actualiza datos si no estás en modo de edición
+    if (!modoEdicion) {
+      setDatos(datosOriginales);
+    }
+  }, [project, modoEdicion]);
 
   const handleChange = (e) => {
-    setDatos({
-      ...datos,
-      [e.target.id]: e.target.value,
-    });
+    const { id, value } = e.target;
+
+    setDatos((prevDatos) => ({
+      ...prevDatos,
+      [id]: value,
+    }));
   };
 
   const handleSaveEdit = async () => {
     // Realiza una verificación adicional antes de guardar
     if (project.id) {
       try {
-        // Lógica para actualizar el proyecto en la base de datos
-        const response = await saveEditProject(datos.name);
+        // Lógica para actualizar o crear el proyecto en la base de datos
+        const response = await updateProject(project.id, datos.name);
 
         setModoEdicion(false);
-
+        onProjectChange();
       } catch (error) {
         console.error("Error al actualizar datos:", error);
+        // Puedes manejar el error de alguna manera (mostrar un mensaje, etc.)
+      }
+    }
+  };
+
+  const handleActive = async () => {
+    try {
+      await activateProject(project.id);
+
+      onProjectChange();
+
+    } catch (error) {
+      console.error("Error al activar el proyecto:", error);
+      // Puedes manejar el error de alguna manera (mostrar un mensaje, etc.)
+    }
+  };
+
+  const handleDelete = async () => {
+    if (!project.is_active) {
+      try {
+        await deleteProject(project.id);
+        // Puedes hacer más cosas después de la eliminación
+      } catch (error) {
+        console.error("Error al eliminar el proyecto:", error);
         // Puedes manejar el error de alguna manera (mostrar un mensaje, etc.)
       }
     }
@@ -44,25 +93,25 @@ const ElementProject = ({ project }) => {
     <div className="container-project">
       <div className="line-container">
         <div className="field-element-project">
-          <label htmlFor="nameProject" className="form-label">
+          <label htmlFor="name" className="form-label">
             Name Project
           </label>
           <input
             type="text"
             className="form-control"
-            id="nameProject"
+            id="name"
             value={datos.name}
             onChange={handleChange}
             disabled={!modoEdicion}
           ></input>
         </div>
         <div className="field-element-project">
-          <label htmlFor="toolProject" className="form-label">
+          <label htmlFor="tool" className="form-label">
             Forensic Tool
           </label>
           <select
             className="form-select"
-            id="toolProject"
+            id="tool"
             value={datos.forensic_tool}
             onChange={handleChange}
             disabled
@@ -72,12 +121,12 @@ const ElementProject = ({ project }) => {
           </select>
         </div>
         <div className="field-element-project">
-          <label htmlFor="osProject" className="form-label">
+          <label htmlFor="os" className="form-label">
             OS
           </label>
           <select
             className="form-select"
-            id="osProject"
+            id="os"
             value={datos.memory_os}
             onChange={handleChange}
             disabled
@@ -88,13 +137,13 @@ const ElementProject = ({ project }) => {
         </div>
       </div>
       <div className="line-container field-element-project">
-        <label htmlFor="memory_pathProject" className="form-label">
+        <label htmlFor="memory_path" className="form-label">
           Memory Route:
         </label>
         <input
           type="text"
           className="form-control"
-          id="memory_pathProject"
+          id="memory_path"
           value={datos.memory_path}
           onChange={handleChange}
           disabled
@@ -120,24 +169,53 @@ const ElementProject = ({ project }) => {
       )}
       <div className="line-btn-container">
         {modoEdicion ? (
-          <button
-            type="button"
-            className="btn btn-default"
-            onClick={handleSaveEdit}
-          >
-            Save
-          </button>
+          <>
+            <button
+              type="button"
+              className="btn btn-default"
+              onClick={handleSaveEdit}
+            >
+              Save
+            </button>
+            <button
+              type="button"
+              className="btn btn-default"
+              onClick={() => {
+                setModoEdicion(false);
+                // Restablecer los datos a los originales
+                setDatos(datosOriginales);
+              }}
+            >
+              Cancel
+            </button>
+          </>
         ) : (
           <>
-            <button className="btn btn-default">Active</button>
+            {!project.is_active && ( // Verificar si el proyecto no está activo
+              <button
+                type="button"
+                className="btn btn-default"
+                onClick={handleActive}
+              >
+                Active
+              </button>
+            )}
+
             <button
               type="button"
               className="btn btn-edit"
-              onClick={setModoEdicion(true)}
+              onClick={() => setModoEdicion(true)}
             >
               Edit
             </button>
-            <button className="btn btn-delete">Delete</button>
+
+            <button
+              type="button"
+              className="btn btn-delete"
+              onClick={handleDelete}
+            >
+              Delete
+            </button>
           </>
         )}
       </div>

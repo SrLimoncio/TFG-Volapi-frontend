@@ -6,10 +6,11 @@ import ElementCatSecundary from "./ElementCatSec-M";
 import "./elementcatpri-m.css";
 
 const ElementCatPrimary = (props) => {
-  const [subCategories, setSubCategories] = useState([]);
+  const [commands, setCommands] = useState([]);
 
   useEffect(() => {
-    setSubCategories(props.subcategories);
+    console.log(props.commands)
+    setCommands(props.commands);
   }, [props.id]);
 
   return (
@@ -24,15 +25,14 @@ const ElementCatPrimary = (props) => {
       <div className="col-xl-7 col-lg-7">
         <div className="section-command">
           <div>
-            {subCategories
-              ? subCategories.map((subCategory) => (
+            {commands
+              ? commands.map((command) => (
                   <ElementCatSecundary
-                    key={subCategory.id}
-                    id={subCategory.id}
-                    title={subCategory.title}
-                    description={subCategory.description}
-                    command_id={subCategory.command_id}
-                    state={subCategory.state}
+                    key={command.id}
+                    id={command.id}
+                    title={command.title}
+                    description={command.description}
+                    state={command.state}
                   />
                 ))
               : null}

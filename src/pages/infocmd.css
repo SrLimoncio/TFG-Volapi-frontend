@@ -17,18 +17,19 @@
     margin-bottom: 1rem;
 }
 
-.label-cmd-infocmd {
-    font-size: 1.2rem;
+.variable-label {
+    font-size: 18px;
     margin-top: 2rem;
     margin-bottom: 1rem;
 }
 
-/* 
-    Modificacion personalizada para el cuadro de codigo
-*/
-.language-bash {
-    margin-top: 1rem;
-    margin-bottom: 2rem;
+.variable-container {
+    background: var(--container-lv1-color);
+    border: 2px solid var(--border-color);
+    border-radius: 0.25rem;
+    overflow: auto; /* Como se comporta cuando el contenido desborda el contenedor */
+    white-space: pre; /* Sirve para no quitar los space, tab, saltos de linea, etc */
+    margin: 1rem 0rem;
     padding: 1rem 2rem;
-    width: 100%;
 }
+

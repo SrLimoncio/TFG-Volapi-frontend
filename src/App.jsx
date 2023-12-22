@@ -1,5 +1,6 @@
 import React from 'react';
-import { Routes, Route, Navigate } from 'react-router-dom';
+
+import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
 
 import PrivateRoute from './utils/PrivateRoute';
 import { AuthProvider } from './context/AuthContext';
@@ -16,13 +17,14 @@ const App = () => {
       <ProjectProvider>
         <Routes>
             <Route path="/" element={<LaunchPage />} />
+            {/*<Route path="*" element={<NotFound />} />*/}
         </Routes>
         <PrivateRoute>
           <Routes>
-            {/*<Route path="/" element={<LaunchPage />} />*/}
-            <Route path="/command/:id" element={<InfoCmd />} />
-            <Route path="/dashboard" element={<DashBoard />} />
-            <Route path="/menu" element={<Menu />} />
+              {/*<Route path="/" element={<LaunchPage />} />*/}
+              <Route path="/command/:id" element={<InfoCmd />} />
+              <Route path="/dashboard" element={<DashBoard />} />
+              <Route path="/menu" element={<Menu />} />
           </Routes>
         </PrivateRoute>
       </ProjectProvider>

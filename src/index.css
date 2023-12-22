@@ -192,15 +192,6 @@ body {
 /* 
     Elementos que forman parte de los cuadros de codigo para mostrar el cmd
 */
-.language-bash {
-    background: var(--container-lv1-color);
-    border: 1px solid var(--border-color);
-    border-radius: 0.25rem;
-    display: block;
-    overflow: auto; /* Como se comporta cuando el contenido desborda el contenedor */
-    white-space: pre; /* Sirve para no quitar los space, tab, saltos de linea, etc */
-}
-
 
 .height-page-block {
     display: flex;

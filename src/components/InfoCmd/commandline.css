@@ -1,0 +1,19 @@
+/* 
+    Modificacion personalizada para el cuadro de codigo
+*/
+
+.color-path {
+    color: #FABC50;
+}
+
+.color-command {
+    color: #5CFAA1;
+}
+
+.color-bash {
+    color: #FA8B82;
+}
+
+.color-other{
+    color: #75B4FA;
+}

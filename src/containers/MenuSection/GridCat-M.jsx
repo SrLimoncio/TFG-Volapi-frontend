@@ -4,7 +4,7 @@ import Cookies from "js-cookie";
 import { getCatsMenu } from "../../services/MenuService";
 import ElementCatPrimary from "../../components/CategoryMenu/ElementCatPri-M";
 
-const GridCat = () => {
+const GridCat = (props) => {
   const [categories, setCategories] = useState([]);
 
   useEffect(() => {
@@ -25,7 +25,7 @@ const GridCat = () => {
     };
 
     fetchCategories();
-  }, []);
+  }, [props]);
 
   return (
     <div>
@@ -35,7 +35,7 @@ const GridCat = () => {
           id={category.id}
           title={category.title}
           description={category.description}
-          subcategories={category.subcategories || []}
+          commands={category.commands || []}
         />
       ))}
     </div>

@@ -7,7 +7,7 @@ import {menuExecuteCommand} from "../../services/CommandService";
 import "./elementcatsec-m.css";
 
 const ElementCatSecundary = (props) => {
-  const [state, setState] = useState(props.state);
+  const [stateCommand, setStateCommand] = useState(props.state);
   const navigate = useNavigate();
 
   const showCommand = () => {
@@ -24,7 +24,7 @@ const ElementCatSecundary = (props) => {
       const response = await menuExecuteCommand(props.id);
   
       if (response.data.success) {
-        setState(response.data.state);
+        setStateCommand(response.data.state);
       }
 
     }catch (error) {
@@ -51,8 +51,8 @@ const ElementCatSecundary = (props) => {
       <div className="container-top-elesec">
         <div className="title-elesec">{props.title}</div>
         <div className="container2-top-elesec">
-          <div className="status-elesec">{state}</div>
-          {state === "active" ? (
+          <div className="status-elesec">{stateCommand}</div>
+          {stateCommand === "active" ? (
             <button className="btn btn-default" onClick={showCommand}>
               SHOW
             </button>

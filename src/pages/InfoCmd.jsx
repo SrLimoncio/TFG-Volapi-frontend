@@ -1,8 +1,11 @@
 import React, { useState, useEffect } from "react";
+import Prism from 'prismjs';
 import { useLocation } from "react-router-dom";
 
 import Navbar from "../components/NavBar/Navbar";
 import TableInfoCmd from "../components/InfoCmd/TableInfoCmd";
+import SunburstChart from "../components/InfoCmd/SunburstChart";
+import CommandLine from "../components/InfoCmd/CommandLine";
 
 import { showCommand } from "../services/CommandService";
 
@@ -11,14 +14,17 @@ import "./infocmd.css";
 const InfoCmd = () => {
   const location = useLocation();
   const commandId = location.state?.id;
+  const [showChart, setShowChart] = useState(false);
+
 
   const [cmdInfo, setCmdInfo] = useState({
     title: "",
     description: "",
-    command: "",
+    command_line: "",
+    execution_time: "",
     commandOutput: { headers: [], values: [] },
+    chartOutput: { },
   });
-
 
   useEffect(() => {
     const fetchCommandInfo = async () => {
@@ -30,8 +36,10 @@ const InfoCmd = () => {
         setCmdInfo({
           title: response.data.title,
           description: response.data.description,
-          command: response.data.command,
+          command_line: response.data.command_line,
+          execution_time: response.data.execution_time,
           commandOutput: response.data.commandOutput,
+          chartOutput: response.data.chartOutput,
         });
 
       } catch (error) {
@@ -44,26 +52,40 @@ const InfoCmd = () => {
     fetchCommandInfo();
   }, [commandId]);
 
+  const toggleChartView = () => {
+    setShowChart(!showChart);
+  };
+
+
   return (
     <div>
       <Navbar />
-      <div className="container height-page-block">
+      <div className="container">
         <div className="row margin-top-page-start">
           <div className="title-fl">{cmdInfo.title}</div>
           <div className="col-lg-6 col-sm-12 section-col-infocmd">
             <div className="desc-infocmd">{cmdInfo.description}</div>
           </div>
           <div className="col-lg-6 col-sm-12 section-col-infocmd">
-            <div className="label-cmd-infocmd">Comando:</div>
-            <pre className="language-bash">
-              <code className="">{cmdInfo.command}</code>
-            </pre>
+            <div className="variable-label">Command:</div>
+            <CommandLine command={cmdInfo.command_line} />
+            <div className="variable-label">Execution date:</div>
+            <div className="variable-container">{cmdInfo.execution_time}</div>
+
           </div>
+          <button className="btn btn-default" onClick={toggleChartView}>
+            {showChart ? "Show Table" : "Show Chart"}
+          </button>
         </div>
-        <TableInfoCmd 
-          headers = {cmdInfo.commandOutput.headers}
-          values = {cmdInfo.commandOutput.values}
-        />
+        {showChart ? (
+          /*<SunburstChart data={ddata} />*/
+          <SunburstChart data={cmdInfo.chartOutput} />
+        ) : (
+          <TableInfoCmd
+            headers={cmdInfo.commandOutput.headers}
+            values={cmdInfo.commandOutput.values}
+          />
+        )}
       </div>
     </div>
   );
