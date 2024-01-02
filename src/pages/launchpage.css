@@ -9,14 +9,14 @@
 
 .tittle-hero {
     font-family: identify;
-    font-size: 10rem;
+    /*font-size: 10rem;*/
     color: var(--main-color);
     margin-top: 10rem;
 }
 
 .titleform {
     font-family: freeline;
-    font-size: 2rem;
+    /*font-size: 2rem;*/
     color: var(--title-color);
     margin-top: 2rem;
     margin-bottom: 2rem;

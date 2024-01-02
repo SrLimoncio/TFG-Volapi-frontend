@@ -70,7 +70,7 @@ const SunburstChart = ({ data }) => {
                             .reverse()
                             .join("/")}`;
       
-        // Añadiendo información adicional
+        // Añadiendo información adicional PsList
         if (d.data.pid) {
           tooltipText += `\nPID: ${d.data.pid}`;
         }
@@ -80,8 +80,17 @@ const SunburstChart = ({ data }) => {
         if (d.data.exiteTime) {
           tooltipText += `\nExite Time: ${d.data.exiteTime}`;
         }
-        
-        tooltipText += `\nThreads: ${d.data.threads}`;
+        if (d.data.threads) {
+          tooltipText += `\nThreads: ${d.data.threads}`;
+        }
+
+        // Añadiendo información adicional DllList
+        if (d.data.base) {
+          tooltipText += `\nBase: ${d.data.base}`;
+        }
+        if (d.data.size) {
+          tooltipText += `\nSize: ${d.data.size}`;
+        }
         
         //tooltipText += `\nThreads: ${format(d.value) - 1}`;
       

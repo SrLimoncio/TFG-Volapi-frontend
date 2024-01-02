@@ -1,29 +1,48 @@
-.grid-project-section {
-    margin: 2rem;
+.grid-section-project {
+    padding: 2rem;
 }
 
-.new-project-content {
-    cursor: pointer; /* Cambia el cursor al pasar el mouse para indicar que es interactivo */
-    user-select: none; /* Evita que el texto dentro del botón sea seleccionable */
-    border: 3px var(--border-color) solid;
-    border-radius: 1rem;
+.section-new-project {
+    width: 100%;
+    height: 6rem;
+    background-color: var(--body-color);
+
     margin-top: 2rem;
     margin-bottom: 2rem;
-    height: 6rem;
+    padding: 2rem 3rem;
+
+    cursor: pointer;
+    user-select: none;
+    border: 2px var(--border-color) solid;
+    border-radius: 1rem;
+
     display: flex;
     text-align: center;
     align-items: center;
     justify-content: center;
+
+    color: var(--title-color);
 }
-.new-project-content:focus {
+.section-new-project:hover {
     background-color: var(--container-lv1-color);
 }
 
+.content-new-project{
+    display: flex;
+    text-align: center;
+    
+    justify-content: space-between;
+}
+
 .icon-new-project {
+    width: 1.5rem;
+    height: 1.5rem;
     display: inline;
+    
 }
 
 .title-new-project {
     display: inline;
-    font-size: 1.5rem;
+    margin-left: 1rem;
+    /*font-size: 1.5rem;*/
 }

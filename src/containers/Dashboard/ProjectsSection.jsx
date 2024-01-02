@@ -14,65 +14,78 @@ const ProjectsSection = () => {
 
   const [hasChange, setHasChange] = useState(false);
 
-  const loadProjects = async () => {
+  const loadProjects = useCallback(async () => {
     try {
-      const response = await getListProjects();
-      const projects = response.data.projects;
-      setProjects(projects);
+      const { data } = await getListProjects();
+      setProjects(data.projects);
     } catch (error) {
       console.error("Error al obtener los proyectos", error);
+      // Mostrar mensaje de error en UI
     }
-  };
+  }, []);
 
   useEffect(() => {
     loadProjects();
-  }, [hasChange]);
+  }, [hasChange, loadProjects]);
 
-  const handleProjectChange = () => {
+  const handleProjectChange = useCallback(() => {
     setHasChange((prev) => !prev);
-  };
+  }, []);
 
-  const setNuevoProyecto = () => {
+  const setNuevoProyecto = useCallback(() => {
     if (!newProject) {
       const blankProject = {
         name: "",
         tool: "",
         os: "",
-        memory_path: "",
-        sha256: "",
-        sha1: "",
-        md5: "",
+        memoryFile: null,
       };
-
-      // Establece el nuevo proyecto en el estado
-      setNewProject(blankProject);
-      // Oculta el botón "Create a new project"
-      setShowNewProjectButton(false);
+      setNewProject(blankProject); // Aquí estableces el nuevo proyecto
+      setShowNewProjectButton(false); // Ocultas el botón para crear un nuevo proyecto
     }
-  };
+  }, [newProject]);
 
-  const handleNewProjectClose = () => {
+  const handleNewProjectClose = useCallback(() => {
     // Muestra nuevamente el botón "Create a new project"
     setShowNewProjectButton(true);
     // Limpia el estado del nuevo proyecto
     setNewProject(null);
-  };
+  }, []);
 
   return (
-    <div className="grid-project-section">
+    <div className="grid-section-project">
       {projects.map((project) => (
-        <ElementProject key={project.id} project={project} onProjectChange={handleProjectChange} />
+        <ElementProject
+          key={project.id}
+          project={project}
+          onProjectChange={handleProjectChange}
+        />
       ))}
       {showNewProjectButton && (
-        <div className="new-project-content" onClick={setNuevoProyecto}>
-          <button className="content-new-project">
-            <div className="icon-new-project">+</div>
+        <button className="section-new-project" onClick={setNuevoProyecto}>
+          <div className="content-new-project">
+            <div className="icon-new-project">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="100%"
+                height="100%"
+                fill="var(--title-color)"
+                className="bi bi-plus-square"
+                viewBox="0 0 16 16"
+              >
+                <path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2z" />
+                <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4" />
+              </svg>
+            </div>
             <div className="title-new-project">Create a new project</div>
-          </button>
-        </div>
+          </div>
+        </button>
       )}
       {newProject && (
-        <NewProject key="new" setNewProject={handleNewProjectClose} onProjectChange={handleProjectChange}/>
+        <NewProject
+          setNewProject={handleNewProjectClose}
+          onProjectChange={handleProjectChange}
+        />
       )}
     </div>
   );

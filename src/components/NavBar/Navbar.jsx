@@ -4,6 +4,8 @@ import Logo from "./Logo-NB";
 import ButtonFlex from "./ButtonFlex-NB";
 import NavLinks from "./LinksList-NB";
 
+import './navbar.css'
+
 // Navbar.tsx (Componente principal del navbar)
 const Navbar = () => {
   return (

@@ -9,7 +9,6 @@ const ElementCatPrimary = (props) => {
   const [commands, setCommands] = useState([]);
 
   useEffect(() => {
-    console.log(props.commands)
     setCommands(props.commands);
   }, [props.id]);
 
@@ -33,6 +32,7 @@ const ElementCatPrimary = (props) => {
                     title={command.title}
                     description={command.description}
                     state={command.state}
+                    options={command.options}
                   />
                 ))
               : null}
