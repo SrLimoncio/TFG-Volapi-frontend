@@ -1,74 +1,101 @@
 import React, { createContext, useContext, useState, useEffect } from "react";
 import Cookies from "js-cookie";
-import { checkToken } from "../services/AuthService";
+import { checkAccessToken, renewAccessToken } from "../services/AuthService";
 
 // Creación del contexto de autenticación
 const AuthContext = createContext();
 
 // Proveedor del contexto de autenticación
 export const AuthProvider = ({ children }) => {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
-
-  useEffect(() => {
-    const obtenerToken = async () => {
-      try{
-        // Recuperar el token almacenado en la cookie al cargar la aplicación
-        const token = Cookies.get('jwtToken');
-
-        // Comprobamos que el token es correcto
-        if (token !== null && token !== undefined && token.trim() !== '' && token !== "null") {
-          const headers = {
-            Authorization: `Bearer ${token}`,
-          };
-          const response = await checkToken(headers);
-
-          if (response.data.success) {
-            setIsAuthenticated(true);
-            
-          } else {
-            Cookies.remove('jwtToken');
-            setIsAuthenticated(false);
-          }
-        }
-
-      } catch (error) {
-        console.error('Error al verificar el token:', error);
-      }
-    };
-
-    obtenerToken();
-  }, []);
-
-  const login = (token) => {
-    // Establecer la cookie con el token
-    // Calcula el tiempo de expiración sumando 60 minutos en milisegundos
-    const ExpirationTime = new Date(new Date().getTime() + 60 * 60 * 1000);
-
-    Cookies.set('jwtToken', token, { expires: ExpirationTime});
-
-    setIsAuthenticated(true);
-  };
+  const [auth, setAuth] = useState({
+    user: null,
+    isAuthenticated: false,
+    isCheckingToken: false,
+    needCheckToken: false
+  });
 
   const logout = () => {
-    // Eliminar la cookie al cerrar sesión
-    Cookies.remove("jwtToken");
-
-    setIsAuthenticated(false);
+    Cookies.remove('accessJwtToken');
+    Cookies.remove('refreshJwtToken');
+    setAuth({ user: null, isAuthenticated: false, isCheckingToken: false, needCheckToken: false});
   };
 
-  const updateToken = (newToken) => {
-    const ExpirationTime = new Date(new Date().getTime() + 60 * 60 * 1000);
+  const getAccessTokenCookie = () => {
+    return Cookies.get('accessJwtToken');
+  };
 
-    Cookies.set('jwtToken', newToken, { expires: ExpirationTime});
+  const getRefreshTokenCookie = () => {
+    return Cookies.get('refreshJwtToken');
+  };
+
+  useEffect(() => {
+    const validateToken = async () => {
+        // Activa el flag de comprobando token
+        setAuth(prev => ({ ...prev, isCheckingToken: true }));
+
+        const accessToken = getAccessTokenCookie();
+        const refreshToken = getRefreshTokenCookie();
+
+        // Si no hay tokens, cerramos sesion
+        if ( (!accessToken || accessToken === 'null') || (!refreshToken || refreshToken === 'null') ){
+          Cookies.remove('accessJwtToken');
+          Cookies.remove('refreshJwtToken');
+          setAuth({ user: null, isAuthenticated: false, isCheckingToken: false, needCheckToken: false});
+          return;
+        }
+        console.log("\nEntra useEffects Auth\n")
+        try {
+            const response = await checkAccessToken();
+            if (response.data.success) {
+                setAuth(prev => ({ ...prev, user: response.data.user, 
+                    isAuthenticated: response.data.isValid }));
+            } else {
+              Cookies.remove('accessJwtToken');
+              Cookies.remove('refreshJwtToken');
+              setAuth({ user: null, isAuthenticated: false, isCheckingToken: false, needCheckToken: false});
+            }
+        } catch (error) {
+            console.error('Error al verificar el token:', error);
+            Cookies.remove('accessJwtToken');
+            Cookies.remove('refreshJwtToken');
+            setAuth({ user: null, isAuthenticated: false, isCheckingToken: false, needCheckToken: false});
+        
+        } finally {
+            setAuth(prev => ({ ...prev, isCheckingToken: false, needCheckToken: false }));
+        }
+    };
+
+    validateToken();
+  }, []);
+
+  // Establece las cookies con los tokens pasados por params.
+  const setCookieAccessToken = ( access_token ) => {
+    //const accessTokenExpireMinutes = process.env.REACT_APP_ACCESS_TOKEN_EXPIRE_MINUTES;
+    //const ExpirationTimeAccessToken = new Date(new Date().getTime() + parseInt(accessTokenExpireMinutes) * 60 * 1000);
+
+    Cookies.set('accessJwtToken', access_token);
+    //Cookies.set('accessJwtToken', newToken, { expires: ExpirationTimeAccessToken, secure: true, httpOnly: true, sameSite: 'Strict' });
+  };
+  const setCookieRefreshToken = ( refresh_token ) => {
+    //const refreshTokenExpireMinutes = process.env.REACT_APP_REFRESH_TOKEN_EXPIRE_MINUTES;
+    //const ExpirationTimeRefreshToken = new Date(new Date().getTime() + parseInt(refreshTokenExpireMinutes) * 60 * 1000);
+
+    Cookies.set('refreshJwtToken', refresh_token );
+    //Cookies.set('accessJwtToken', newToken, { expires: ExpirationTimeRefreshToken, secure: true, httpOnly: true, sameSite: 'Strict' });
+  };
+
+  const login = ( accessToken, refreshToken ) => {
+    setCookieAccessToken(accessToken);
+    setCookieRefreshToken(refreshToken);
+
+    setAuth(prev => ({ ...prev, isAuthenticated: true, needCheckToken: true }));
   };
 
   return (
-    <AuthContext.Provider value={{ isAuthenticated, login, logout, updateToken }}>
+    <AuthContext.Provider value={{ ...auth, login, logout }}>
       {children}
     </AuthContext.Provider>
   );
 };
 
-const useAuth = () => useContext(AuthContext);
-
-export { useAuth };
+export const useAuth = () => useContext(AuthContext);

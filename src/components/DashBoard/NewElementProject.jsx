@@ -1,6 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 
 import { createProject, uploadChunk } from "../../services/DashboardService.js";
+import { CancelIcon, AddIcon } from "../../components/General/Icons.js";
+import ButtonIconText from "../General/Buttons/ButtonIconText.jsx";
 
 import "./elementproyect.css";
 
@@ -17,7 +19,7 @@ const NewProject = ({ setNewProject, onProjectChange }) => {
   const [isUploading, setIsUploading] = useState(false);
 
   // Lista de extensiones permitidas
-  const allowedExtensions = [".mem", ".dmp", ".raw", ".jpeg"];
+  const allowedExtensions = [".mem", ".dmp", ".raw"];
   const fileSizeLimit = 10 * 1024 * 1024 * 1024; // 10 GB
 
   const handleChange = (e) => {
@@ -89,6 +91,8 @@ const NewProject = ({ setNewProject, onProjectChange }) => {
     } catch (error) {
       console.error("Error al crear projecto:", error);
       // Puedes manejar el error de alguna manera (mostrar un mensaje, etc.)
+
+      //Borrar projecto
     } finally {
       setIsUploading(false);
       //setNewProject(null); // Reinicia el nuevo proyecto
@@ -156,54 +160,20 @@ const NewProject = ({ setNewProject, onProjectChange }) => {
       </div>
 
       <div className="line-btn-container">
-        <button
-          type="button"
-          className="btn btn-confirm"
-          onClick={handleCreateProject}
-          disabled={isUploading}
-        >
-          <div className="line-item-icon-text">
-            <div className="icon-item">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="100%"
-                height="100%"
-                fill="currentColor"
-                className="bi bi-plus-circle"
-                viewBox="0 0 16 16"
-              >
-                <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16" />
-                <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4" />
-              </svg>
-            </div>
-            <div className="title-item">
-              {isUploading ? "Creating..." : "Create"}
-            </div>
-          </div>
-        </button>
-        <button
-          type="button"
-          className="btn btn-danger"
-          onClick={() => setNewProject(null)}
-          disabled={isUploading}
-        >
-          <div className="line-item-icon-text">
-            <div className="icon-item">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="100%"
-                height="100%"
-                fill="currentColor"
-                className="bi bi-x-circle"
-                viewBox="0 0 16 16"
-              >
-                <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16" />
-                <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708" />
-              </svg>
-            </div>
-            <div className="title-item">Cancel</div>
-          </div>
-        </button>
+        <ButtonIconText
+          classType={"btn-confirm"}
+          svgIcon={<CancelIcon />}
+          text={isUploading ? "Creating..." : "Create"}
+          eventOnClick={handleCreateProject}
+          isDisabled={isUploading}
+        />
+        <ButtonIconText
+          classType={"btn-danger"}
+          svgIcon={<CancelIcon />}
+          text={"Cancel"}
+          eventOnClick={() => setNewProject(null)}
+          isDisabled={isUploading}
+        />
       </div>
     </div>
   );

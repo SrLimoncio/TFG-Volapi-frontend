@@ -1,15 +1,15 @@
 import React, { useState, useEffect } from "react";
 
-import { getSubCatsMenu } from "../../services/MenuService";
 import ElementCatSecundary from "./ElementCatSec-M";
 
 import "./elementcatpri-m.css";
 
 const ElementCatPrimary = (props) => {
-  const [commands, setCommands] = useState([]);
+  const [subCatCommands, setSubCatCommands] = useState([]);
 
   useEffect(() => {
-    setCommands(props.commands);
+    setSubCatCommands(props.commands);
+
   }, [props.id]);
 
   return (
@@ -24,8 +24,8 @@ const ElementCatPrimary = (props) => {
       <div className="col-xl-7 col-lg-7">
         <div className="section-command">
           <div>
-            {commands
-              ? commands.map((command) => (
+            {subCatCommands
+              ? subCatCommands.map((command) => (
                   <ElementCatSecundary
                     key={command.id}
                     id={command.id}

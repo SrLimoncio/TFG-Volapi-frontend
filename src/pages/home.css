@@ -26,3 +26,13 @@
     margin-top: 5rem;
     margin-bottom: 5rem;
 }
+
+.text_link {
+    color: var(--light-text-color);
+    cursor: pointer; /* Cambia el cursor al pasar sobre el botón */
+    text-decoration: none;
+    margin-left: 0.5rem;
+}
+.text_link:hover {
+    text-decoration: underline;
+}

@@ -1,13 +1,32 @@
-import axios from "axios";
+import axios from './axios';
+import axiosInstance from './axios'
 
-const baseURL = 'http://127.0.0.1:5000/auth';
+const partURL = '/auth/api';
 
-export const request_login = async (email, password) => {
+export const login_user = async (email, password) => {
+  const response = await axios.post(`${partURL}/login`, 
+  { email, password }
+  );
+  return response;
+
+};
+
+export const register = async (email, password, password2, username, name) => {
   try {
-    const response = await axios.post(`${baseURL}/api/login`, {
-      email,
-      password
-    });
+    const response = await axios.post(`${partURL}/register`, 
+    { email, password, password2, username, name}
+    );
+    return response.data;
+    // Cambiar
+
+  } catch (error) {
+    throw error;
+  }
+};
+
+export const checkAccessToken = async () => {
+  try {
+    const response = await axiosInstance.get(`${partURL}/check-access-token`);
     return response;
 
   } catch (error) {
@@ -15,20 +34,14 @@ export const request_login = async (email, password) => {
   }
 };
 
-export const register = async (email, password, password2, username, name) => {
+export const renewAccessToken = async (failedAccessToken, refreshToken) => {
   try {
-    const response = await axios.post(`${baseURL}/api/register`, 
-    { email, password, password2, username, name});
-    return response.data;
-
-  } catch (error) {
-    throw error;
-  }
-};
-
-export const checkToken = async (headers) => {
-  try {
-    const response = await axios.get(`${baseURL}/api/check-token`, { headers });
+    const response = await axiosInstance.post(`${partURL}/renew-access-token`, {}, {
+      headers: {
+        'Failed-Access-Token': failedAccessToken,
+        'Refresh-Token': `Bearer ${refreshToken}`
+      }
+    });
     return response;
 
   } catch (error) {

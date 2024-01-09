@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import Cookies from "js-cookie";
 
 import { getCatsMenu } from "../../services/MenuService";
 import ElementCatPrimary from "../../components/CategoryMenu/ElementCatPri-M";
@@ -10,12 +9,7 @@ const GridCat = (props) => {
   useEffect(() => {
     const fetchCategories = async () => {
       try {
-        const jwtToken = Cookies.get("jwtToken");
-
-        const headers = {
-          Authorization: `Bearer ${jwtToken}`,
-        };
-        const response = await getCatsMenu(headers);
+        const response = await getCatsMenu();
 
         setCategories(response.data.categories);
 

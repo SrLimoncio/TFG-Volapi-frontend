@@ -1,45 +1,48 @@
 import React, { createContext, useContext, useState, useEffect } from "react";
-import Cookies from "js-cookie";
-import { useAuth } from "./AuthContext";
-import { getListProjects } from "../services/DashboardService";
+import { checkUserHasProject } from "../services/DashboardService";
+import { useAuth } from './AuthContext';
 
 const ProjectContext = createContext();
 
 export const ProjectProvider = ({ children }) => {
+  const [hasProject, setHasProject] = useState({
+    userHasProject: false,
+    isCheckingHasProject: false
+  });
   const { isAuthenticated } = useAuth();
-  const [userProjects, setUserProjects] = useState([]);
-  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const fetchUserProjects = async () => {
-      try {
-        // Obtener proyectos del usuario si está autenticado
-        if (isAuthenticated) {
-          const jwtToken = Cookies.get("jwtToken");
-          const headers = {
-            Authorization: `Bearer ${jwtToken}`,
-          };
+      const fetchUserProjects = async () => {
+        setHasProject(prev => ({ ...prev, isCheckingHasProject: true }));
 
-          const response = await getListProjects(headers);
-          if (response.data.success) {
-            setUserProjects(response.data.projects);
-          } else {
-            console.error("Error al obtener proyectos:", response.data.message);
-          }
+        // Si no esta autentificado o aun esta checkeando el token, sale
+        if ( !isAuthenticated) {
+          return;
         }
 
-        setLoading(false);
-      } catch (error) {
-        console.error("Error al obtener proyectos:", error);
-        setLoading(false);
-      }
+        console.log("hola: ", isAuthenticated)
+        try {
+          const response = await checkUserHasProject();
+          setHasProject(prev => ({ ...prev, userHasProject: response.data.success && response.data.hasProject }));
+
+        } catch (error) {
+          console.error("Error al obtener proyectos:", error);
+          setHasProject(prev => ({ ...prev, userHasProject: false }));
+
+        } finally {
+          setHasProject(prev => ({ ...prev, isCheckingHasProject: false }));
+        }
     };
 
     fetchUserProjects();
   }, [isAuthenticated]);
 
+  const projectLogout = () => {
+    setHasProject({ userHasProject: false, isCheckingHasProject: false});
+  };
+
   return (
-    <ProjectContext.Provider value={{ userProjects, loading }}>
+    <ProjectContext.Provider value={{ ...hasProject, projectLogout}}>
       {children}
     </ProjectContext.Provider>
   );

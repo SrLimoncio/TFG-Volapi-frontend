@@ -5,6 +5,9 @@
     border-radius: 10px;
     margin: 0.5rem 0;
 }
+.active-element-sec {
+    border-color: var(--light-text-color);
+}
 
 .container-top-elesec {
     display: flex;
@@ -19,23 +22,14 @@
 }
 
 .title-elesec {
-    /*font-size: 1.4rem;*/
+    font-size: 1.2rem;
     text-align: left;
     font-weight: bold;
     color: var(--title-color);
 }
 
-.status-elesec {
-    /*font-size: 0.9rem;*/
-    margin-right: 2rem;
-}
-
 .description-elesec {
     display: block;
-    /*font-size: 1rem;*/
+    font-size: 0.9rem;
     margin-top: 1rem;
-}
-
-.btn-default {
-    width: 6rem;
 }

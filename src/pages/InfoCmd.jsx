@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import Prism from 'prismjs';
 import { useLocation } from "react-router-dom";
 
 import Navbar from "../components/NavBar/Navbar";
@@ -59,7 +58,6 @@ const InfoCmd = () => {
 
   return (
     <div>
-      <Navbar />
       <div className="container">
         <div className="row margin-top-page-start">
           <div className="title-fl">{cmdInfo.title}</div>

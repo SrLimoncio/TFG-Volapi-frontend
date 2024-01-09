@@ -4,9 +4,12 @@
     margin-top: 2rem;
     margin-bottom: 2rem;
     padding: 1rem;
+
+    box-shadow: 0px 0px 10px 5px rgba(82,110,122,0.2);
 }
 .active-element-project {
     border-color: var(--main-color);
+    box-shadow: 0px 0px 10px 5px rgba(95,169,203,0.2);
 }
 
 .line-item-project {
@@ -43,6 +46,7 @@
     margin-top: 1.5rem;
     flex-direction: row;
     justify-content: flex-end;
+    align-items: flex-end;
 }
 
 .btn-default,

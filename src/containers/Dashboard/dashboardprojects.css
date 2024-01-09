@@ -1,5 +1,7 @@
 .grid-section-project {
-    padding: 2rem;
+    flex: 1;
+    padding: 1rem;
+    overflow-y: auto;
 }
 
 .section-new-project {
@@ -22,6 +24,10 @@
     justify-content: center;
 
     color: var(--title-color);
+
+    transition: transform 0.3s ease;
+
+    box-shadow: 0px 0px 10px 5px rgba(82,110,122,0.2);
 }
 .section-new-project:hover {
     background-color: var(--container-lv1-color);
@@ -32,6 +38,7 @@
     text-align: center;
     
     justify-content: space-between;
+    
 }
 
 .icon-new-project {
@@ -44,5 +51,5 @@
 .title-new-project {
     display: inline;
     margin-left: 1rem;
-    /*font-size: 1.5rem;*/
+    font-size: 1.2rem;
 }

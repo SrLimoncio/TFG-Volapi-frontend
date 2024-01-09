@@ -1,4 +1,4 @@
-import axiosInstance from '../utils/axiosConfig'
+import axiosInstance from './axios'
 
 const partURL = '/command/api';
 
@@ -14,26 +14,26 @@ const prepareOptionsForGetRequest = (options) => {
 };
 
 export const menuExecuteCommand = async (command_id, options) => {
-    try {
-      const preparedOptions = prepareOptionsForGetRequest(options);
-      const response = await axiosInstance.get(`${partURL}/exe-vol-command`, {
-        params: {
-          command_id,
-          options: preparedOptions
-        }
-      });
-      return response;
-    } catch (error) {
-      throw error;
+  const preparedOptions = prepareOptionsForGetRequest(options);
+  const response = await axiosInstance.get(`${partURL}/exe-vol-command`, {
+    params: {
+      command_id,
+      options: preparedOptions
     }
+  });
+
+  return response;
 };
 
 export const showCommand = async (command_id) => {
-  try {
-    const response = await axiosInstance.get(`${partURL}/show-vol-command`, { params: { command_id } });
-    return response;
-  } catch (error) {
-    throw error;
-  }
+  const response = await axiosInstance.get(`${partURL}/show-vol-command`, { params: { command_id } });
+  
+  return response;
 };
 
+
+export const menuDeleteResultCommand = async (command_id) => {
+  const response = await axiosInstance.delete(`${partURL}/delete-result-cmd/${command_id}`);
+  
+  return response;
+};

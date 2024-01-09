@@ -1,14 +1,13 @@
 import React, { useState } from "react";
+import { NavLink } from "react-router-dom";
 
 import { register } from "../../services/AuthService.js";
 
 import FormFloatWithCheck from "../../components/Forms/FormFloatWithCheck.jsx";
 
-import "./heroformregister.css";
+import "./homeregister.css";
 
-
-const HeroFormRegister = ({ redirectToLogin }) => {
-
+const HomeRegister = ({ redirectToLogin }) => {
   const [email, setEmail] = useState("");
   const [validEmail, setValidEmail] = useState(true);
   const [msgErrorEmail, setMsgErrorEmail] = useState("");
@@ -29,10 +28,15 @@ const HeroFormRegister = ({ redirectToLogin }) => {
   const [validName, setValidName] = useState(true);
   const [msgErrorName, setMsgErrorName] = useState("");
 
-
   const handleRegister = async () => {
     try {
-      const responseData = await register(email, password, password2, username, name);
+      const responseData = await register(
+        email,
+        password,
+        password2,
+        username,
+        name
+      );
 
       setValidEmail(true);
       setMsgErrorEmail("");
@@ -52,53 +56,51 @@ const HeroFormRegister = ({ redirectToLogin }) => {
       // Redirige al usuario a la página de inicio de sesión u otra página
       redirectToLogin();
     } catch (error) {
-        console.error("Error en el registro");
+      console.error("Error en el registro");
 
-        // Si es un error de respuesta del servidor
-        if (error.response) {
-          
-          if (error.response.status === 400) {
-            const error_fields = error.response.data.error_fields;
-            if (error_fields.email) {
-              setValidEmail(false);
-              setMsgErrorEmail(error_fields.email);
-            } else{
-              setValidEmail(true);
-              setMsgErrorEmail("");
-            }
-            if (error_fields.password) {
-              setValidPassword(false);
-              setMsgErrorPassword(error_fields.password);
-            } else{
-              setValidPassword(true);
-              setMsgErrorPassword("");
-            }
-            if (error_fields.password2) {
-              setValidPassword2(false);
-              setMsgErrorPassword2(error_fields.password2);
-            } else{
-              setValidPassword2(true);
-              setMsgErrorPassword2("");
-            }
-            if (error_fields.username) {
-              setValidUsername(false);
-              setMsgErrorUsername(error_fields.username);
-            } else{
-              setValidUsername(true);
-              setMsgErrorUsername("");
-            }
-            if (error_fields.name) {
-              setValidName(false);
-              setMsgErrorName(error_fields.name);
-            } else{
-              setValidName(true);
-              setMsgErrorName("");
-            }
+      // Si es un error de respuesta del servidor
+      if (error.response) {
+        if (error.response.status === 400) {
+          const error_fields = error.response.data.error_fields;
+          if (error_fields.email) {
+            setValidEmail(false);
+            setMsgErrorEmail(error_fields.email);
+          } else {
+            setValidEmail(true);
+            setMsgErrorEmail("");
+          }
+          if (error_fields.password) {
+            setValidPassword(false);
+            setMsgErrorPassword(error_fields.password);
+          } else {
+            setValidPassword(true);
+            setMsgErrorPassword("");
+          }
+          if (error_fields.password2) {
+            setValidPassword2(false);
+            setMsgErrorPassword2(error_fields.password2);
+          } else {
+            setValidPassword2(true);
+            setMsgErrorPassword2("");
+          }
+          if (error_fields.username) {
+            setValidUsername(false);
+            setMsgErrorUsername(error_fields.username);
+          } else {
+            setValidUsername(true);
+            setMsgErrorUsername("");
+          }
+          if (error_fields.name) {
+            setValidName(false);
+            setMsgErrorName(error_fields.name);
+          } else {
+            setValidName(true);
+            setMsgErrorName("");
           }
         }
+      }
     }
   };
-
 
   const updateEmail = (newValue) => {
     setEmail(newValue);
@@ -115,7 +117,6 @@ const HeroFormRegister = ({ redirectToLogin }) => {
   const updateName = (newValue) => {
     setName(newValue);
   };
-
 
   return (
     <div className="section-form-login">
@@ -165,12 +166,19 @@ const HeroFormRegister = ({ redirectToLogin }) => {
         textError={msgErrorName}
         updateInput={updateName}
       />
-      
+
       <div className="btn btn-default-big" onClick={handleRegister}>
         Register
       </div>
+
+      <p>
+        Already registered?{" "}
+        <NavLink to="/home/login" className="">
+          <span className="text_link">Login here</span>
+        </NavLink>
+      </p>
     </div>
   );
 };
 
-export default HeroFormRegister;
+export default HomeRegister;

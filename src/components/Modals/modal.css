@@ -69,10 +69,6 @@
   color: var(--text-color);
 }
 
-.btn-confirm {
-  margin-top: 1rem;
-}
-
 
 .line-option-cmd {
   display: flex;

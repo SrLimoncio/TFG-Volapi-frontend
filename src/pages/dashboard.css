@@ -32,7 +32,6 @@
 }
 .item-menu-dashboard:hover {
     background-color: var(--container-lv2-color);
-    border: 3px var(--border-color) solid;
 }
 .item-active-menu-dashboard {
     background-color: var(--container-lv2-color);
@@ -42,12 +41,19 @@
 
 .content-section-dashboard {
     padding: 2rem;
-    margin-top: 2rem;
+    margin: 2rem;
     flex: 1;
     justify-content: center;
+
+    border-radius: 1rem;
+
+    box-shadow: rgba(255, 255, 255, 0.3) 3px 3px 8px;
+
+    display: flex;
+    flex-direction: column;
 }
 
-.title_section_content {
+.title-section-content {
     font-family: freeline;
     font-size: 2rem;
     font-weight: bold;

@@ -6,7 +6,6 @@ import Navbar from "../components/NavBar/Navbar";
 const Menu = () => {
   return (
     <div>
-      <Navbar />
       <div className="container">
         <GridCat />
       </div>

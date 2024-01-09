@@ -1,59 +1,45 @@
-import axiosInstance from '../utils/axiosConfig'
+import axiosInstance from './axios'
 
 const partURL = '/dashboard/api';
 
 
-export const getListProjects = async () => {
-    try {
-      const response = await axiosInstance.get(`${partURL}/projects`);
-      return response;
+export const checkUserHasProject = async () => {
+  const response = await axiosInstance.get(`${partURL}/user-has-projects`);
 
-    } catch (error) {
-      throw error;
-    }
+  return response;
+};
+
+export const getListProjects = async () => {
+  const response = await axiosInstance.get(`${partURL}/projects`);
+
+  return response;
 };
 
 export const updateProject = async (id_project, new_nameProject) => {
-  try {
-    const response = await axiosInstance.put(`${partURL}/update-name-project/${id_project}`,
-      { new_nameProject }
-    );
-    return response;
-
-  } catch (error) {
-    throw error;
-  }
+  const response = await axiosInstance.put(`${partURL}/update-name-project/${id_project}`,
+    { new_nameProject }
+  );
+  
+  return response;
 };
 
 export const activateProject = async (id_project) => {
-  try {
-    const response = await axiosInstance.put(`${partURL}/activate-project/${id_project}`);
-    return response;
+  const response = await axiosInstance.put(`${partURL}/activate-project/${id_project}`);
 
-  } catch (error) {
-    throw error;
-  }
+  return response;
 };
 
 export const deleteProject = async (id_project) => {
-  try {
-    const response = await axiosInstance.delete(`${partURL}/delete-project/${id_project}`);
-    return response;
-
-  } catch (error) {
-    throw error;
-  }
+  const response = await axiosInstance.delete(`${partURL}/delete-project/${id_project}`);
+  
+  return response;
 };
 
 export const createProject = async (name, tool, os) => {
-  try {
-    const response = await axiosInstance.post(`${partURL}/create-project`,
-    { name, tool, os });
-    return response;
-
-  } catch (error) {
-    throw error;
-  }
+  const response = await axiosInstance.post(`${partURL}/create-project`,
+  { name, tool, os });
+  
+  return response;
 };
 
 export const uploadChunk  = async (projectId, chunk, chunkNumber, totalChunks, fileName) => {
@@ -68,15 +54,12 @@ export const uploadChunk  = async (projectId, chunk, chunkNumber, totalChunks, f
     formData.append("fileName", fileName);
   }
 
-  try {
-    const response = await axiosInstance.post(`${partURL}/upload-chunk-file`, formData, {
-      headers: {
-        'Content-Type': 'multipart/form-data',
-      },
-    });
-    return response;
+  const response = await axiosInstance.post(`${partURL}/upload-chunk-file`, formData, {
+    headers: {
+      'Content-Type': 'multipart/form-data',
+    },
+  });
+  
+  return response;
 
-  } catch (error) {
-    throw error;
-  }
 };

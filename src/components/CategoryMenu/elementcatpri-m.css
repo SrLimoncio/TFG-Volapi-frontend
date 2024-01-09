@@ -3,30 +3,26 @@
     margin-right: auto;
     margin-bottom: 20px;
     background-color: var(--container-lv1-color);
-    border-radius: 10px;
+    border-radius: 1rem;
     padding: 1rem;
 
-    box-shadow: 5px 5px 10px;
+    box-shadow: rgba(255, 255, 255, 0.3) 3px 3px 8px;
 }
 
 
 .section-cat {
-    padding: 5px; /* Relleno interno para el contenido */
     box-sizing: border-box;
-    padding: 0 0.75rem;
-    min-height: 1px;
-    float: left;
+    padding: 1rem;
 }
-
 
 .title-cat {
-    /*font-size: 30px;*/
-    margin: 3rem 2rem;
-    display: block;
-    text-align: center;
+    font-size: 1.4rem;
     font-weight: bold;
+    
+    margin: 3rem 2rem;
+    text-align: center;
+    
 }
-
 
 .descrip-cat {
     display: block;

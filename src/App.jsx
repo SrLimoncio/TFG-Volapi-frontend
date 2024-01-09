@@ -1,34 +1,88 @@
-import React from 'react';
+import React from "react";
 
-import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
+import { Route, Routes, Navigate  } from "react-router-dom";
 
-import PrivateRoute from './utils/PrivateRoute';
-import { AuthProvider } from './context/AuthContext';
-import { ProjectProvider } from './context/ProjectContext';
+import PrivateRoute from "./components/PrivateRoute";
+import { AuthProvider } from "./context/AuthContext";
+import { ProjectProvider } from "./context/ProjectContext";
 
-import Menu from './pages/Menu';
-import LaunchPage from "./pages/LaunchPage";
-import DashBoard from './pages/DashBoard';
+import Navbar from "./components/NavBar/Navbar";
+import Menu from "./pages/Menu";
+
+import Home from "./pages/Home";
+import HomeRegister from "./containers/Home/HomeRegister";
+import HomeLogin from "./containers/Home/HomeLogin";
+
+import DashBoard from "./pages/DashBoard";
+import DashboardProjects from "./containers/Dashboard/DashboardProjects";
+import DashboardProfile from "./containers/Dashboard/DashboardProfile";
+
 import InfoCmd from "./pages/InfoCmd";
+import Error404 from "./pages/Error404";
 
 const App = () => {
   return (
-    <AuthProvider>
-      <ProjectProvider>
-        <Routes>
-            <Route path="/" element={<LaunchPage />} />
-            {/*<Route path="*" element={<NotFound />} />*/}
-        </Routes>
-        <PrivateRoute>
+    <div className="">
+      <Navbar />
+
+      <AuthProvider>
+        <ProjectProvider>
           <Routes>
-              {/*<Route path="/" element={<LaunchPage />} />*/}
-              <Route path="/command/:id" element={<InfoCmd />} />
-              <Route path="/dashboard" element={<DashBoard />} />
-              <Route path="/menu" element={<Menu />} />
+            <Route path="/" element={<Navigate to="/home/login" replace />} />
+
+            <Route path="/home" element={<Home />}>
+              <Route path="login" element={<HomeLogin />} />
+              <Route path="register" element={<HomeRegister />} />
+            </Route>
+
+            <Route
+              path="/menu"
+              element={
+                <PrivateRoute requireProject={true}>
+                  <Menu />
+                </PrivateRoute>
+              }
+            />
+            <Route
+              path="/command/:id"
+              element={
+                <PrivateRoute requireProject={true}>
+                  <InfoCmd />
+                </PrivateRoute>
+              }
+            />
+
+            <Route
+              path="/dashboard"
+              element={
+                <PrivateRoute>
+                  <DashBoard />
+                </PrivateRoute>
+              }
+            >
+              <Route
+                path="profile"
+                element={
+                  <PrivateRoute>
+                    <DashboardProfile />
+                  </PrivateRoute>
+                }
+              />
+              <Route
+                path="projects"
+                element={
+                  <PrivateRoute>
+                    <DashboardProjects />
+                  </PrivateRoute>
+                }
+              />
+            </Route>
+
+            <Route path="*" element={<Error404 />} />
           </Routes>
-        </PrivateRoute>
-      </ProjectProvider>
-    </AuthProvider>
+        </ProjectProvider>
+      </AuthProvider>
+    </div>
   );
 };
 
