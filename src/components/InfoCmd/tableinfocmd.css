@@ -1,4 +1,64 @@
 .section-table {
+    margin-bottom: 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.input-filter-container {
+    margin-bottom: 0.5rem;
+    width: 50rem;
+}
+.input-group-text{
+    background-color: var(--container-lv2-color);
+    border-color: var(--border-color);
+    color: var(--title-color);
+}
+
+.table-container {
+    margin-bottom: 0.5rem;
     overflow-y: auto;
-    flex: 1;
+    min-height: 28rem;
+}
+
+.table {
+    margin-bottom: 0.2rem;
+}
+
+.table th {
+    background-color: var(--main-color);
+    color: var(--title-color );
+}
+.table td {
+    background-color: var(--container-lv1-color );
+    color: var(--text-color);
+    font-size: 0.85rem;
+}
+
+.paginacion-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+
+    margin-bottom: 2rem;
+    margin-top: 1rem;
+}
+
+.input-group {
+    width: auto;
+    align-items: center;
+    flex-wrap: nowrap; 
+}
+
+.input-pag {
+    display: flex;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+
+    background-color: var(--container-lv1-color);
+    width: 5rem;
+    height: 2.2rem;
 }

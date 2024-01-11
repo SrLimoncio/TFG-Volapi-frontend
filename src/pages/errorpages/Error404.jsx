@@ -1,6 +1,6 @@
 import React, { useState, useEffect} from "react";
 
-import "./error404.css";
+import "./errorpage.css";
 
 
 const Error404 = ({ initialSection }) => {

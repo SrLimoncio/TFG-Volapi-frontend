@@ -188,7 +188,7 @@ const SunburstChart = ({ data }) => {
     createSunburstChart();
   }, [data]);
 
-  return <div ref={chartRef}></div>;
+  return <div className="section-content-data" ref={chartRef}></div>;
 };
 
 export default SunburstChart;

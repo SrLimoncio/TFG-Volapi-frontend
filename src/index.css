@@ -181,6 +181,11 @@ body {
     background-color: var(--main-color);
     color: var(--title-color);
 }
+.btn-default:disabled {
+    background-color: rgba(61, 173, 224, 0.8);
+    color: var(--title-color);
+    border-color: rgba(61, 173, 224, 0.8);
+}
 
 .btn-confirm {
     height: 2.2rem;

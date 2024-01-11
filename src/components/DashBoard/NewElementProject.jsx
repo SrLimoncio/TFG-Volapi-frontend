@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import toast from "react-hot-toast";
 
 import { createProject, uploadChunk } from "../../services/DashboardService.js";
 import { CancelIcon, AddIcon } from "../../components/General/Icons.js";
@@ -36,10 +37,12 @@ const NewProject = ({ setNewProject, onProjectChange }) => {
         file.size <= fileSizeLimit &&
         allowedExtensions.includes(fileExtension[0].toLowerCase())
       ) {
-        console.log(file.name);
         setNewProjectData((prevData) => ({ ...prevData, memoryFile: file }));
       } else {
-        console.error("Archivo no válido o demasiado grande.");
+        console.error("Invalid or oversized file, please select another valid file");
+        toast.error("Invalid or oversized file, please select another valid file",
+          {duration: 4000,}
+        );
         e.target.value = "";
       }
     } else {
@@ -83,16 +86,23 @@ const NewProject = ({ setNewProject, onProjectChange }) => {
         await uploadFileChunks(newProjectData.memoryFile, projectId);
 
         setNewProject(null);
+
+        toast.error("The project has been created successfully.",
+          {duration: 4000,}
+        );
+
         // Actualizar la lista de proyectos después de crear uno nuevo
         onProjectChange();
       } else {
-        console.error("Error al crear projecto");
+        console.success("Error al crear projecto");
       }
     } catch (error) {
       console.error("Error al crear projecto:", error);
-      // Puedes manejar el error de alguna manera (mostrar un mensaje, etc.)
+      toast.error("The project has been created successfully.",
+          {duration: 4000,}
+        );
 
-      //Borrar projecto
+      //Cambiar: Borrar projecto
     } finally {
       setIsUploading(false);
       //setNewProject(null); // Reinicia el nuevo proyecto

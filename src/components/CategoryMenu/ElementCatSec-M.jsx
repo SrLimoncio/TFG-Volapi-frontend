@@ -1,11 +1,16 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import toast from 'react-hot-toast';
 
 import {
   menuExecuteCommand,
   menuDeleteResultCommand,
 } from "../../services/CommandService";
 import Modal from "../Modals/Modal";
+import ButtonIconText from "../General/Buttons/ButtonIconText.jsx";
+import ButtonIcon from "../General/Buttons/ButtonIcon.jsx";
+
+import { ExecuteIcon, TrashIcon } from "../General/Icons.js";
 
 import "./elementcatsec-m.css";
 
@@ -14,6 +19,8 @@ const ElementCatSecundary = (props) => {
   const [stateCommand, setStateCommand] = useState(props.state);
   // Define si la ventana modal de las opciones de ejecucion esta abierta.
   const [isModalOpen, setIsModalOpen] = useState(false);
+  // Define el estado de cargando de la ejecucion del comando
+  const [isCmdLoad, setIsCmdLoad] = useState(false);
   // Define la lista de opciones permitidas para el comando.
   const [options, setOptions] = useState([]);
 
@@ -84,25 +91,29 @@ const ElementCatSecundary = (props) => {
 
   const executeCommand = async () => {
     try {
+      setIsModalOpen(false);
+      setIsCmdLoad(true);
       const response = await menuExecuteCommand(props.id, options);
 
       if (response.data.success) {
         setStateCommand(response.data.state);
+        setIsCmdLoad(false);
+        toast.success('The result of the command has been successfully executed', {
+          duration: 4000
+        });
       }
-
-      setIsModalOpen(false);
     } catch (error) {
       // Si es un error de respuesta del servidor
-      if (error.response) {
-        console.error(error.response.data.message);
-        if (error.response.status === 401) {
-          const error_login = error.response.data.message;
-          if (error_login) {
-          } else {
-          }
-        }
+      if (!error?.response) {
+        //Cambiar
+        //setMsgErrorLogin("No Server Response");
+        navigate("/error500");
+      } else if (error.response?.status === 400) {
+        //setMsgErrorLogin("Missing Username or Password");
+      } else if (error.response?.status === 401) {
+        //setMsgErrorLogin("Unauthorized");
       } else {
-        console.error(error.message);
+        //setMsgErrorLogin("Login Failed");
       }
     }
   };
@@ -113,6 +124,9 @@ const ElementCatSecundary = (props) => {
 
       if (response.data.success) {
         setStateCommand(response.data.state);
+        toast.success('The result of the command has been successfully deleted', {
+          duration: 4000
+        });
       }
     } catch (error) {
       // Si es un error de respuesta del servidor
@@ -143,62 +157,28 @@ const ElementCatSecundary = (props) => {
         <div className="container2-top-elesec">
           {stateCommand === "active" ? (
             <>
-              <button className="btn btn-default" onClick={showCommand}>
-                <div className="line-item-icon-text">
-                  <div className="icon-item">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="100%"
-                      height="100%"
-                      fill="currentColor"
-                      className="bi bi-eye-fill"
-                      viewBox="0 0 16 16"
-                    >
-                      <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0" />
-                      <path d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8m8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7" />
-                    </svg>
-                  </div>
-                  <div className="title-item">Show</div>
-                </div>
-              </button>
-              <button className="btn btn-danger" onClick={deleteResultCommand}>
-                <div className="line-item-icon-text">
-                  <div className="icon-item">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="100%"
-                      height="100%"
-                      fill="currentColor"
-                      className="bi bi-trash-fill"
-                      viewBox="0 0 16 16"
-                    >
-                      <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5M8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5m3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0" />
-                    </svg>
-                  </div>
-                </div>
-              </button>
+              <ButtonIconText
+                classType={"btn-default"}
+                svgIcon={<ExecuteIcon />}
+                text={"Show"}
+                eventOnClick={showCommand}
+              />
+              <ButtonIcon
+                classType={"btn-danger"}
+                svgIcon={<TrashIcon />}
+                eventOnClick={deleteResultCommand}
+              />
             </>
           ) : (
-            <button
-              className="btn btn-default"
-              onClick={() => setIsModalOpen(true)}
-            >
-              <div className="line-item-icon-text">
-                <div className="icon-item">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="100%"
-                    height="100%"
-                    fill="currentColor"
-                    className="bi bi-play-fill"
-                    viewBox="0 0 16 16"
-                  >
-                    <path d="m11.596 8.697-6.363 3.692c-.54.313-1.233-.066-1.233-.697V4.308c0-.63.692-1.01 1.233-.696l6.363 3.692a.802.802 0 0 1 0 1.393z" />
-                  </svg>
-                </div>
-                <div className="title-item">Run</div>
-              </div>
-            </button>
+            <>
+              <ButtonIconText
+                classType={"btn-default"}
+                svgIcon={<ExecuteIcon />}
+                text={isCmdLoad ? "Running...": "Run"}
+                eventOnClick={() => setIsModalOpen(true)}
+                isDisabled={isCmdLoad}
+              />
+            </>
           )}
         </div>
       </div>

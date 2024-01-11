@@ -31,7 +31,7 @@ const CommandHighlighter = ({ command }) => {
     }, [command]);
   
     return (
-      <div className='variable-container'>
+      <div className='command-line-container'>
         {styledParts}
       </div>
     );

@@ -6,6 +6,7 @@ import { useAuth } from '../context/AuthContext';
 
 const axiosInstance = axios.create({
   baseURL: process.env.REACT_APP_API_BASE_URL,  // BaseURL común
+  headers: { 'Content-Type': 'application/json' },
   //withCredentials: true // importante para las cookies
 });
 
@@ -29,10 +30,7 @@ axiosInstance.interceptors.request.use(
 axiosInstance.interceptors.response.use(
   response => response, 
   async error => {
-    console.log("capta error")
     const originalConfig = error.config;
-    console.log("status ", error.response?.status)
-    console.log("isExpired ", error.response?.data.isExpired)
 
     // Ignora la solicitud de renovación del token para evitar bucle
     if (originalConfig.url === "/auth/api/renew-access-token") {
@@ -44,24 +42,17 @@ axiosInstance.interceptors.response.use(
       error.response?.data.isExpired === true && 
       !originalConfig._retry) {
 
-        //console.log("Da error 401: ", error.response)
         console.log("Da error 401")
         originalConfig._retry = true;
 
         const refreshToken = Cookies.get('refreshJwtToken');
         const failedAccessToken = originalConfig.headers['Authorization']
 
-        console.log("refreshToken: ", refreshToken)
-        console.log("failedAccessToken: ", failedAccessToken)
-
         try {
           const newTokenResponse = await renewAccessToken(failedAccessToken, refreshToken);
           const newAccessToken = newTokenResponse.data.newAccessToken;
-          console.log("newAccessToken: ", newAccessToken)
 
           // Guardar el nuevo token de acceso y actualizar la cabecera de autorización
-          //const accessTokenExpireMinutes = process.env.REACT_APP_ACCESS_TOKEN_EXPIRE_MINUTES;
-          //const ExpirationTimeAccessToken = new Date(new Date().getTime() + parseInt(accessTokenExpireMinutes) * 60 * 1000);
           Cookies.set('accessJwtToken', newAccessToken);
 
           originalConfig.headers['Authorization'] = `Bearer ${newAccessToken}`;
@@ -70,13 +61,15 @@ axiosInstance.interceptors.response.use(
 
         } catch (_error) {
           // Manejo de errores del proceso de renovación (p.ej. token de refresco caducado)
-          console.log("RefreshToken error: ", _error)
+          console.log("Ha dado error el reintento de solicitud ", _error)
 
-          Cookies.delete('accessJwtToken');
-          Cookies.delete('refreshJwtToken');
+          Cookies.remove('accessJwtToken');
+          Cookies.remove('refreshJwtToken');
 
           // Redireccionar al inicio de sesión
+          console.log("Antes de redirecionar")
           window.location.href = '/home/login';
+          console.log("Despues de redirecionar")
           
           return Promise.reject(_error);
         }

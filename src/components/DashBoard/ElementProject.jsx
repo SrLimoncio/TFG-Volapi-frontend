@@ -1,11 +1,18 @@
 import React, { useState, useEffect } from "react";
+import toast from "react-hot-toast";
 
 import {
   updateProject,
   activateProject,
   deleteProject,
 } from "../../services/DashboardService.js";
-import { PencilIcon, TrashIcon } from "../../components/General/Icons.js";
+import {
+  PencilIcon,
+  TrashIcon,
+  SaveEditionIcon,
+  CancelIcon,
+  CheckCircleIcon
+} from "../../components/General/Icons.js";
 import ButtonIconText from "../General/Buttons/ButtonIconText.jsx";
 
 import "./elementproyect.css";
@@ -60,9 +67,18 @@ const ElementProject = ({ project, onProjectChange }) => {
 
         setModoEdicion(false);
         onProjectChange();
+
+        toast.success("The editing of the project was successful.", {
+          duration: 4000,
+        });
       } catch (error) {
         console.error("Error al actualizar datos:", error);
-        // Puedes manejar el error de alguna manera (mostrar un mensaje, etc.)
+        toast.error(
+          "An error occurred during project editing. Please try again.",
+          {
+            duration: 4000,
+          }
+        );
       }
     }
   };
@@ -71,10 +87,20 @@ const ElementProject = ({ project, onProjectChange }) => {
     try {
       await activateProject(project.id);
 
+      toast.success("The project has been activated successfully.", {
+        duration: 4000,
+      });
+
       onProjectChange();
     } catch (error) {
       console.error("Error al activar el proyecto:", error);
-      // Puedes manejar el error de alguna manera (mostrar un mensaje, etc.)
+
+      toast.error(
+        "There was an error activating the project. Please try again.",
+        {
+          duration: 4000,
+        }
+      );
     }
   };
 
@@ -82,12 +108,29 @@ const ElementProject = ({ project, onProjectChange }) => {
     if (!project.is_active) {
       try {
         await deleteProject(project.id);
-        // Puedes hacer más cosas después de la eliminación
+
+        toast.success("The deletion of the project was successful.", {
+          duration: 4000,
+        });
+
         onProjectChange();
       } catch (error) {
         console.error("Error al eliminar el proyecto:", error);
-        // Puedes manejar el error de alguna manera (mostrar un mensaje, etc.)
+
+        toast.error(
+          "An error occurred while attempting to delete the project. Please try again.",
+          {
+            duration: 4000,
+          }
+        );
       }
+    } else {
+      toast.error(
+        "Deleting an active project is not possible. Please try another project.",
+        {
+          duration: 4000,
+        }
+      );
     }
   };
 
@@ -206,35 +249,31 @@ const ElementProject = ({ project, onProjectChange }) => {
       <div className="line-btn-container">
         {modoEdicion ? (
           <>
-            <button
-              type="button"
-              className="btn btn-confirm"
-              onClick={handleSaveEdit}
-            >
-              Save
-            </button>
-            <button
-              type="button"
-              className="btn btn-danger"
-              onClick={() => {
+            <ButtonIconText
+              classType={"btn-confirm"}
+              svgIcon={<SaveEditionIcon />}
+              text={"Save"}
+              eventOnClick={handleSaveEdit}
+            />
+            <ButtonIconText
+              classType={"btn-danger"}
+              svgIcon={<CancelIcon />}
+              text={"Cancel"}
+              eventOnClick={() => {
                 setModoEdicion(false);
-                // Restablecer los datos a los originales
                 setDatos(datosOriginales);
               }}
-            >
-              Cancel
-            </button>
+            />
           </>
         ) : (
           <>
             {!project.is_active && ( // Verificar si el proyecto no está activo
-              <button
-                type="button"
-                className="btn btn-default"
-                onClick={handleActive}
-              >
-                Active
-              </button>
+              <ButtonIconText
+                classType={"btn-default"}
+                svgIcon={<CheckCircleIcon />}
+                text={"Active"}
+                eventOnClick={handleActive}
+              />
             )}
             <ButtonIconText
               classType={"btn-warning"}
@@ -242,7 +281,6 @@ const ElementProject = ({ project, onProjectChange }) => {
               text={"Edit"}
               eventOnClick={() => setModoEdicion(true)}
             />
-
             <ButtonIconText
               classType={"btn-danger"}
               svgIcon={<TrashIcon />}

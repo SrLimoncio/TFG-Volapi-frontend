@@ -17,7 +17,7 @@ const Navbar = () => {
             height={30}
             className="d-inline-block align-top"
           />
-          <h3 className="d-inline-block">Volapi</h3>
+          <h3 className="d-inline-block">MemorixAnalitic</h3>
         </a>
         <button
           className="navbar-toggler"

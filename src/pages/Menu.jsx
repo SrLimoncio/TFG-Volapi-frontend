@@ -1,7 +1,6 @@
 import React from "react";
 
 import GridCat from "../containers/MenuSection/GridCat-M";
-import Navbar from "../components/NavBar/Navbar";
 
 const Menu = () => {
   return (
