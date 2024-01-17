@@ -1,7 +1,7 @@
 import React from "react";
 
-import { Route, Routes, Navigate  } from "react-router-dom";
-import { Toaster } from 'react-hot-toast';
+import { Route, Routes, Navigate } from "react-router-dom";
+import { Toaster } from "react-hot-toast";
 
 import PrivateRoute from "./components/PrivateRoute";
 import { AuthProvider } from "./context/AuthContext";
@@ -21,24 +21,19 @@ import DashboardProfile from "./containers/Dashboard/DashboardProfile";
 import InfoCmd from "./pages/InfoCmd";
 
 import Error404 from "./pages/errorpages/Error404";
-import Error500 from "./pages/errorpages/Error500";
-
 
 const App = () => {
   return (
     <div className="">
       <Navbar />
-      <Toaster
-        position="top-right"
-        reverseOrder={false}
-      />
-
+      <Toaster position="top-right" reverseOrder={false} />
       <AuthProvider>
         <ProjectProvider>
           <Routes>
-            <Route path="/" element={<Navigate to="/home/login" replace />} />
+            <Route path="/" element={<Navigate to="/home" replace />} />
 
             <Route path="/home" element={<Home />}>
+              <Route index element={<Navigate replace to="login" />} />
               <Route path="login" element={<HomeLogin />} />
               <Route path="register" element={<HomeRegister />} />
             </Route>
@@ -68,6 +63,7 @@ const App = () => {
                 </PrivateRoute>
               }
             >
+              <Route index element={<Navigate replace to="projects" />} />
               <Route
                 path="profile"
                 element={
@@ -87,10 +83,10 @@ const App = () => {
             </Route>
 
             <Route path="*" element={<Error404 />} />
-            <Route path="/error500" element={<Error500 />} />
           </Routes>
         </ProjectProvider>
       </AuthProvider>
+
     </div>
   );
 };

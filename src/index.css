@@ -39,6 +39,16 @@
     src: url('./assets/fonts/Identify/Identify.ttf') format('truetype');
 }
 
+@font-face {
+    font-family: 'eurostile';
+    src: url('./assets/fonts/Eurostile/eurostile.otf') format('truetype');
+}
+
+@font-face {
+    font-family: 'oleto';
+    src: url('./assets/fonts/oleto/Oleto.ttf') format('truetype');
+}
+
 
 /*
     Body
@@ -127,7 +137,7 @@ body {
 }
 
 .form-text {
-    color: var(--error-color);
+    color: var(--danger-color);
     text-align: left;
 }
 

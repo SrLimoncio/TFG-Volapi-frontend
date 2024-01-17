@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import toast from "react-hot-toast";
 
-import { createProject, uploadChunk } from "../../services/DashboardService.js";
+import { createProject, uploadChunk, deleteProject } from "../../services/DashboardService.js";
 import { CancelIcon, AddIcon } from "../../components/General/Icons.js";
 import ButtonIconText from "../General/Buttons/ButtonIconText.jsx";
 
@@ -17,6 +17,7 @@ const NewProject = ({ setNewProject, onProjectChange }) => {
     memoryFile: null,
   });
 
+  const [newProjectId, setNewProjectId] = useState("");
   const [isUploading, setIsUploading] = useState(false);
 
   // Lista de extensiones permitidas
@@ -82,12 +83,13 @@ const NewProject = ({ setNewProject, onProjectChange }) => {
 
       if (response_cp.data.success) {
         const projectId = response_cp.data.projectId;
+        setNewProjectId(projectId)
 
         await uploadFileChunks(newProjectData.memoryFile, projectId);
 
         setNewProject(null);
 
-        toast.error("The project has been created successfully.",
+        toast.confirm("The project has been created successfully.",
           {duration: 4000,}
         );
 
@@ -98,11 +100,31 @@ const NewProject = ({ setNewProject, onProjectChange }) => {
       }
     } catch (error) {
       console.error("Error al crear projecto:", error);
-      toast.error("The project has been created successfully.",
-          {duration: 4000,}
+      if (error.response && error.response.status === 409) {
+        if (error.response.data.projectExist === true){
+          toast.error(
+            "The name of the project is already taken. Please choose another one",
+            {
+              duration: 4000,
+            }
+          );
+        } else {
+          toast.error(
+            "The fields are incorrect. Please check them",
+            {
+              duration: 4000,
+            }
+          );
+        }
+        
+      } else {
+        toast.error(
+          "The project could not be created.",
+          {
+            duration: 4000,
+          }
         );
-
-      //Cambiar: Borrar projecto
+      } 
     } finally {
       setIsUploading(false);
       //setNewProject(null); // Reinicia el nuevo proyecto

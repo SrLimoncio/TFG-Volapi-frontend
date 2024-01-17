@@ -1,3 +1,27 @@
 .navbar-custom{
  height: var(--height-navbar);
 }
+
+.navbar-line-brand {
+    display: flex;
+    flex-direction: row;
+    align-items: end;
+    justify-content: center;
+}
+
+.navbar-logo {
+    width: 3.5rem;
+    height: 3.5rem;
+}
+
+.navbar-webname {
+    margin-left: 1rem;
+}
+
+.item-active-navbar{
+    color: var(--main-color);
+}
+
+.nav-item:hover {
+    color: var(--main-color);
+}

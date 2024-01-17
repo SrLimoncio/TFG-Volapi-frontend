@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, NavLink, Link } from "react-router-dom";
+import toast from 'react-hot-toast';
 
 import { useAuth } from "../../context/AuthContext.js";
 import { login_user } from "../../services/AuthService.js";
 
 import FormFloatWithCheck from "../../components/Forms/FormFloatWithCheck.jsx";
-
-import "./homelogin.css";
 
 const HomeLogin = () => {
   const { login } = useAuth();
@@ -37,17 +36,26 @@ const HomeLogin = () => {
       setEmail("");
       setPassword("");
 
+      toast.success('Successful login. Redirecting...', {
+        duration: 4000
+      });
+
       navigate("/menu", { replace: true });
 
     } catch (error) {
-      if (!error?.response) {
-        setMsgErrorLogin("No Server Response");
-      } else if (error.response?.status === 400) {
-        setMsgErrorLogin("Missing Username or Password");
-      } else if (error.response?.status === 401) {
-        setMsgErrorLogin("Unauthorized");
+      console.log(error?.response?.status)
+      setValidLogin(false);
+      if (error?.response?.status === 400 ||
+        error?.response?.status === 401) {
+        setMsgErrorLogin("Incorrect username or password");
+        toast.error('Incorrect username or password', {
+          duration: 4000
+        });
       } else {
-        setMsgErrorLogin("Login Failed");
+        setMsgErrorLogin("Error during login");
+        toast.error('Error during login', {
+          duration: 4000
+        });
       }
     }
   };
@@ -60,8 +68,8 @@ const HomeLogin = () => {
   };
 
   return (
-    <div className="section-form-login">
-      <div className="titleform">Login !</div>
+    <div className="home-form-container ">
+      <div className="home-form-title">Login !</div>
       <FormFloatWithCheck
         type={"email"}
         id={"inputLoginEmail"}
@@ -79,15 +87,15 @@ const HomeLogin = () => {
         updateInput={updatePassword}
       />
 
-      <div className="login-msg-error">{msgErrorLogin}</div>
+      <div className="home-form-msgerror">{msgErrorLogin}</div>
 
       <button className="btn btn-default-big" onClick={handleLogin}>
-        Login
+        Begin analysis.
       </button>
 
       <p>
         Need an Account?
-        <Link to="/home/register" className="text_link">
+        <Link to="/home/register" className="home-form-textlink">
           Sign Up
         </Link>
       </p>

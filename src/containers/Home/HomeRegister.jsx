@@ -1,11 +1,10 @@
 import React, { useState } from "react";
-import { NavLink } from "react-router-dom";
+import { Link } from "react-router-dom";
+import toast from 'react-hot-toast';
 
 import { register } from "../../services/AuthService.js";
 
 import FormFloatWithCheck from "../../components/Forms/FormFloatWithCheck.jsx";
-
-import "./homeregister.css";
 
 const HomeRegister = ({ redirectToLogin }) => {
   const [email, setEmail] = useState("");
@@ -30,7 +29,7 @@ const HomeRegister = ({ redirectToLogin }) => {
 
   const handleRegister = async () => {
     try {
-      const responseData = await register(
+      const response = await register(
         email,
         password,
         password2,
@@ -53,14 +52,22 @@ const HomeRegister = ({ redirectToLogin }) => {
       setValidName(true);
       setMsgErrorName("");
 
+      toast.success('Successful registration. Redirecting...', {
+        duration: 4000
+      });
       // Redirige al usuario a la página de inicio de sesión u otra página
       redirectToLogin();
+
     } catch (error) {
       console.error("Error en el registro");
 
       // Si es un error de respuesta del servidor
       if (error.response) {
         if (error.response.status === 400) {
+          toast.error('Error in the registration. Please check the fields.', {
+            duration: 4000
+          });
+
           const error_fields = error.response.data.error_fields;
           if (error_fields.email) {
             setValidEmail(false);
@@ -119,8 +126,8 @@ const HomeRegister = ({ redirectToLogin }) => {
   };
 
   return (
-    <div className="section-form-login">
-      <div className="titleform">Register !</div>
+    <div className="home-form-container">
+      <div className="home-form-title">Register !</div>
       <FormFloatWithCheck
         type={"email"}
         id={"inputRegEmail"}
@@ -173,9 +180,9 @@ const HomeRegister = ({ redirectToLogin }) => {
 
       <p>
         Already registered?{" "}
-        <NavLink to="/home/login" className="">
-          <span className="text_link">Login here</span>
-        </NavLink>
+        <Link to="/home/login" className="home-form-textlink">
+          Login here
+        </Link>
       </p>
     </div>
   );

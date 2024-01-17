@@ -35,21 +35,6 @@ const DashBoard = () => {
         <div className="menu-section-dashboard">
           <div className="group-items-dashboard">
             <NavLink
-              to="profile"
-              className={({ isActive }) =>
-                `item-menu-dashboard ${
-                  isActive ? "item-active-menu-dashboard" : ""
-                }`
-              }
-            >
-              <div className="line-item-icon-text">
-                <div className="icon-item">
-                  <ProfileIcon />
-                </div>
-                <div className="title-item">Profile</div>
-              </div>
-            </NavLink>
-            <NavLink
               to="projects"
               className={({ isActive }) =>
                 `item-menu-dashboard ${

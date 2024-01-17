@@ -11,7 +11,7 @@ import {
   TrashIcon,
   SaveEditionIcon,
   CancelIcon,
-  CheckCircleIcon
+  CheckCircleIcon,
 } from "../../components/General/Icons.js";
 import ButtonIconText from "../General/Buttons/ButtonIconText.jsx";
 
@@ -73,12 +73,21 @@ const ElementProject = ({ project, onProjectChange }) => {
         });
       } catch (error) {
         console.error("Error al actualizar datos:", error);
-        toast.error(
-          "An error occurred during project editing. Please try again.",
-          {
-            duration: 4000,
-          }
-        );
+        if (error.response && error.response.status === 409) {
+          toast.error(
+            "An error occurred during project editing. Please try again.",
+            {
+              duration: 4000,
+            }
+          );
+        } else {
+          toast.error(
+            "The name of the project already exists. Please choose another one",
+            {
+              duration: 4000,
+            }
+          );
+        }
       }
     }
   };
@@ -116,21 +125,22 @@ const ElementProject = ({ project, onProjectChange }) => {
         onProjectChange();
       } catch (error) {
         console.error("Error al eliminar el proyecto:", error);
-
-        toast.error(
-          "An error occurred while attempting to delete the project. Please try again.",
-          {
-            duration: 4000,
-          }
-        );
-      }
-    } else {
-      toast.error(
-        "Deleting an active project is not possible. Please try another project.",
-        {
-          duration: 4000,
+        if (error.response && error.response.status === 409) {
+          toast.error(
+            "Deleting an active project is not possible. Please try another project.",
+            {
+              duration: 4000,
+            }
+          );
+        } else {
+          toast.error(
+            "An error occurred while attempting to delete the project. Please try again.",
+            {
+              duration: 4000,
+            }
+          );
         }
-      );
+      }
     }
   };
 

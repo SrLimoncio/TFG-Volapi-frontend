@@ -1,0 +1,59 @@
+.profile-container {
+    /* Estilos para el contenedor principal */
+  }
+  
+  .profile-row {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  
+  .profile-col {
+    flex: 1;
+    padding: 15px;
+  }
+  
+  .profile-photo {
+    text-align: center;
+  }
+  
+  .profile-photo img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 50%; /* Para hacer la imagen circular */
+  }
+  
+  .profile-info {
+    max-width: 500px; /* Ajusta según tus necesidades */
+  }
+  
+  .profile-field {
+    margin-bottom: 15px;
+  }
+  
+  .profile-field label {
+    display: block;
+    margin-bottom: 5px;
+  }
+  
+  .profile-field input {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  
+  .password-field .password-toggle {
+    display: flex;
+    align-items: center;
+  }
+  
+  .password-field input {
+    flex-grow: 1;
+  }
+  
+  .password-field button {
+    border: none;
+    background: none;
+    cursor: pointer;
+  }

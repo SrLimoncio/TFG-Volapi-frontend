@@ -144,8 +144,8 @@ export const CheckCircleIcon = () => (
 export const RowNextIcon = () => (
     <svg
         xmlns="http://www.w3.org/2000/svg"
-        width="16"
-        height="16"
+        width="100%"
+        height="100%"
         fill="currentColor"
         className="bi bi-caret-right-fill"
         viewBox="0 0 16 16"
@@ -157,8 +157,8 @@ export const RowNextIcon = () => (
 export const RowPrevIcon = () => (
     <svg
         xmlns="http://www.w3.org/2000/svg"
-        width="16"
-        height="16"
+        width="100%"
+        height="100%"
         fill="currentColor"
         className="bi bi-caret-left-fill"
         viewBox="0 0 16 16"
@@ -170,8 +170,8 @@ export const RowPrevIcon = () => (
 export const TableIcon = () => (
     <svg
         xmlns="http://www.w3.org/2000/svg"
-        width="16"
-        height="16"
+        width="100%"
+        height="100%"
         fill="currentColor"
         className="bi bi-table"
         viewBox="0 0 16 16"
@@ -183,8 +183,8 @@ export const TableIcon = () => (
 export const PieChartIcon = () => (
     <svg
         xmlns="http://www.w3.org/2000/svg"
-        width="16"
-        height="16"
+        width="100%"
+        height="100%"
         fill="currentColor"
         className="bi bi-pie-chart-fill"
         viewBox="0 0 16 16"
@@ -196,8 +196,8 @@ export const PieChartIcon = () => (
 export const LineChartIcon = () => (
     <svg
         xmlns="http://www.w3.org/2000/svg"
-        width="16"
-        height="16"
+        width="100%"
+        height="100%"
         fill="currentColor"
         className="bi bi-graph-up"
         viewBox="0 0 16 16"
@@ -207,6 +207,56 @@ export const LineChartIcon = () => (
         />
     </svg>
 );
+
+export const LogoNavbar = () => (
+    <img src={require('../../assets/icons/logoArriba.png')} 
+    alt="Logo" 
+    style={{ width: '100%', height: '100%' }}
+    />
+);
+
+export const EarthIcon = () => (
+    <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="100%"
+        height="100%"
+        fill="currentColor"
+        className="bi bi-globe-americas"
+        viewBox="0 0 16 16"
+    >
+        <path d="M8 0a8 8 0 1 0 0 16A8 8 0 0 0 8 0M2.04 4.326c.325 1.329 2.532 2.54 3.717 3.19.48.263.793.434.743.484q-.121.12-.242.234c-.416.396-.787.749-.758 1.266.035.634.618.824 1.214 1.017.577.188 1.168.38 1.286.983.082.417-.075.988-.22 1.52-.215.782-.406 1.48.22 1.48 1.5-.5 3.798-3.186 4-5 .138-1.243-2-2-3.5-2.5-.478-.16-.755.081-.99.284-.172.15-.322.279-.51.216-.445-.148-2.5-2-1.5-2.5.78-.39.952-.171 1.227.182.078.099.163.208.273.318.609.304.662-.132.723-.633.039-.322.081-.671.277-.867.434-.434 1.265-.791 2.028-1.12.712-.306 1.365-.587 1.579-.88A7 7 0 1 1 2.04 4.327Z" />
+    </svg>
+);
+
+export const AnaliticIcon = () => (
+    <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="100%"
+        height="100%"
+        fill="currentColor"
+        className="bi bi-clipboard2-data-fill"
+        viewBox="0 0 16 16"
+      >
+        <path d="M10 .5a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5.5.5 0 0 1-.5.5.5.5 0 0 0-.5.5V2a.5.5 0 0 0 .5.5h5A.5.5 0 0 0 11 2v-.5a.5.5 0 0 0-.5-.5.5.5 0 0 1-.5-.5" />
+        <path d="M4.085 1H3.5A1.5 1.5 0 0 0 2 2.5v12A1.5 1.5 0 0 0 3.5 16h9a1.5 1.5 0 0 0 1.5-1.5v-12A1.5 1.5 0 0 0 12.5 1h-.585q.084.236.085.5V2a1.5 1.5 0 0 1-1.5 1.5h-5A1.5 1.5 0 0 1 4 2v-.5q.001-.264.085-.5M10 7a1 1 0 1 1 2 0v5a1 1 0 1 1-2 0zm-6 4a1 1 0 1 1 2 0v1a1 1 0 1 1-2 0zm4-3a1 1 0 0 1 1 1v3a1 1 0 1 1-2 0V9a1 1 0 0 1 1-1" />
+      </svg>
+);
+
+export const LockIcon = () => (
+    <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="100%"
+        height="100%"
+        fill="currentColor"
+        className="bi bi-file-lock2-fill"
+        viewBox="0 0 16 16"
+    >
+        <path d="M7 6a1 1 0 0 1 2 0v1H7z" />
+        <path d="M12 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2m-2 6v1.076c.54.166 1 .597 1 1.224v2.4c0 .816-.781 1.3-1.5 1.3h-3c-.719 0-1.5-.484-1.5-1.3V8.3c0-.627.46-1.058 1-1.224V6a2 2 0 1 1 4 0" />
+    </svg>
+);
+
+
 
 
 

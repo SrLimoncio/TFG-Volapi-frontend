@@ -42,7 +42,6 @@ axiosInstance.interceptors.response.use(
       error.response?.data.isExpired === true && 
       !originalConfig._retry) {
 
-        console.log("Da error 401")
         originalConfig._retry = true;
 
         const refreshToken = Cookies.get('refreshJwtToken');
@@ -67,9 +66,7 @@ axiosInstance.interceptors.response.use(
           Cookies.remove('refreshJwtToken');
 
           // Redireccionar al inicio de sesión
-          console.log("Antes de redirecionar")
           window.location.href = '/home/login';
-          console.log("Despues de redirecionar")
           
           return Promise.reject(_error);
         }

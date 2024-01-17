@@ -1,10 +1,67 @@
-.hero-col {
+/* Hero-section */
+.hero-container {
+    display: flex;
+    flex-direction: row;
+    justify-items: center;
+    justify-content: center;
+    align-items: center;
+
+    height: 52rem;
+    padding: 4rem;
+
+    background-image: url('../assets/images/patronhero.png');
+    background-position: center;
+}
+
+.hero-action-call {
     display: flex;
     flex-direction: column;
+    max-width: 40rem;
+    width: auto;
+    margin-right: 5rem;
+}
+
+.title-action-call-hero {
+
+    font-size: 5rem;
+    font-weight: bold;
+    color: var(--text-color);
+
+    color: white; /* Color del texto */
+    text-shadow:
+    -3px -3px 0 #000,  
+     3px -3px 0 #000,
+    -3px 3px 0 #000,
+     3px 3px 0 #000,
+    -3px 0px 0 #000,
+     3px 0px 0 #000,
+     0px -3px 0 #000,
+     0px 3px 0 #000;
+
+}
+
+.text-action-call-hero {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-bottom: 20px;
+    color: white; /* Color del texto */
+    text-shadow:
+    -3px -3px 0 #000,  
+     3px -3px 0 #000,
+    -3px 3px 0 #000,
+     3px 3px 0 #000,
+    -3px 0px 0 #000,
+     3px 0px 0 #000,
+     0px -3px 0 #000,
+     0px 3px 0 #000;
+}
+
+.hero-form-section {
+    display: flex;
     align-items: center;
     justify-self: center;
     text-align: center;
-    background-color: var(--container-lv1-color);
+    width: auto;
 }
 
 .tittle-hero {
@@ -14,25 +71,98 @@
     margin-top: 10rem;
 }
 
-.titleform {
-    font-family: freeline;
-    /*font-size: 2rem;*/
-    color: var(--title-color);
-    margin-top: 2rem;
-    margin-bottom: 2rem;
+/* Estilos compartidos entre loginform y registerform */
+.home-form-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-self: center;
+    text-align: center;
+    
+    background-color: rgba(45, 50, 51, 0.95);;
+    border-radius: 2rem;
+
+    padding: 2rem;
+    width: 25rem;
+}
+
+.home-form-title {
+    font-family: eurostile;
+    font-size: 2rem;
+    color: var(--main-color);
+    margin-top: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.home-form-msgerror {
+    margin-top: 0.5rem;
+    color: var(--danger-color);
 }
 
 .btn-default-big {
-    margin-top: 5rem;
-    margin-bottom: 5rem;
+    margin-top: 3rem;
+    margin-bottom: 3rem;
 }
 
-.text_link {
+.home-form-textlink {
     color: var(--light-text-color);
     cursor: pointer; /* Cambia el cursor al pasar sobre el botón */
     text-decoration: none;
     margin-left: 0.5rem;
 }
-.text_link:hover {
+.home-form-textlink:hover {
     text-decoration: underline;
+}
+
+/* Advantages-section */
+.advantages-row {
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* Centra los elementos verticalmente */
+    align-items: center;     /* Centra los elementos horizontalmente */
+
+    padding: 2rem;
+    margin-top: 3rem;
+}
+
+.advantages-title {
+    font-size: 2rem;
+    width: fit-content;
+    color: var(--main-color );
+    text-align: center;
+}
+
+.advantages-section {
+    display: flex;
+
+    margin-top: 2rem;
+}
+
+
+@media (max-width: 1200px) {
+    .hero-container {
+        flex-direction: column;
+        height: fit-content;
+        padding: 3rem;
+    }
+
+    .tittle-hero {
+        font-size: 10rem;
+        color: var(--main-color);
+        margin-top: 10rem;
+    }
+
+    .hero-action-call {
+        max-width: max-content;
+        margin-right: 0rem;
+    }
+    
+    .title-action-call-hero {
+        font-size: 4rem;
+    }
+    
+    .text-action-call-hero {
+        font-size: 1.5rem;
+        margin-bottom: 3rem;
+    }
 }

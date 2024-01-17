@@ -1,8 +1,8 @@
 import React from "react";
 
-import "./modal.css";
+import "./modalexecutecmd.css";
 
-const Modal = ({
+const ModalExecuteCmd = ({
   isOpen,
   onClose,
   onExecute,
@@ -101,4 +101,4 @@ const Modal = ({
   );
 };
 
-export default Modal;
+export default ModalExecuteCmd;

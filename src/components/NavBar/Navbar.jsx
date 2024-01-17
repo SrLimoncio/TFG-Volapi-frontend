@@ -1,6 +1,6 @@
 import React from "react";
-import { Link } from "react-router-dom";
-import DropdownMenu from "./DropdownMenu-NB";
+import { Link, NavLink } from "react-router-dom";
+import { LogoNavbar } from "../General/Icons";
 
 import "./navbar.css";
 
@@ -9,16 +9,12 @@ const Navbar = () => {
   return (
     <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
       <div className="container">
-        <a className="navbar-brand" href="#">
-          <img
-            src="src\assets\logoVolapi.png"
-            alt=""
-            width={30}
-            height={30}
-            className="d-inline-block align-top"
-          />
-          <h3 className="d-inline-block">MemorixAnalitic</h3>
-        </a>
+        <Link to="/home" className="navbar-brand navbar-line-brand">
+          <div className="navbar-logo">
+            <LogoNavbar />
+          </div>
+          <h3 className="d-inline-block navbar-webname">MemorixAnalitic</h3>
+        </Link>
         <button
           className="navbar-toggler"
           type="button"
@@ -35,22 +31,32 @@ const Navbar = () => {
           id="navbarNavDropdown"
         >
           <ul className="navbar-nav">
-            <li className="nav-item">
-              <Link to="/" className="nav-link" aria-current="page">
-                Inicio
-              </Link>
-            </li>
-            <li className="nav-item">
-              <Link to="/menu" className="nav-link">
-                Menu
-              </Link>
-            </li>
-            <DropdownMenu />
-            <li className="nav-item">
-              <Link to="/dashboard/projects" className="nav-link">
-                Dashboard
-              </Link>
-            </li>
+            <NavLink
+              to="/"
+              className={({ isActive }) =>
+                `nav-link nav-item ${isActive ? "item-active-navbar" : ""}`
+              }
+            >
+              Home
+            </NavLink>
+
+            <NavLink
+              to="/menu"
+              className={({ isActive }) =>
+                `nav-link nav-item ${isActive ? "item-active-navbar" : ""}`
+              }
+            >
+              Menu
+            </NavLink>
+
+            <NavLink
+              to="/dashboard"
+              className={({ isActive }) =>
+                `nav-link nav-item ${isActive ? "item-active-navbar" : ""}`
+              }
+            >
+              Dashboard
+            </NavLink>
           </ul>
         </div>
       </div>

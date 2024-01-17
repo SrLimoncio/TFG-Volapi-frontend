@@ -6,7 +6,7 @@ import {
   menuExecuteCommand,
   menuDeleteResultCommand,
 } from "../../services/CommandService";
-import Modal from "../Modals/Modal";
+import ModalExecuteCmd from "../Modals/ModalExecuteCmd.jsx";
 import ButtonIconText from "../General/Buttons/ButtonIconText.jsx";
 import ButtonIcon from "../General/Buttons/ButtonIcon.jsx";
 
@@ -144,7 +144,7 @@ const ElementCatSecundary = (props) => {
         stateCommand === "active" ? "active-element-sec" : ""
       }`}
     >
-      <Modal
+      <ModalExecuteCmd
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
         onExecute={executeCommand}
@@ -175,7 +175,13 @@ const ElementCatSecundary = (props) => {
                 classType={"btn-default"}
                 svgIcon={<ExecuteIcon />}
                 text={isCmdLoad ? "Running...": "Run"}
-                eventOnClick={() => setIsModalOpen(true)}
+                eventOnClick={() => {
+                  if (Object.keys(options).length > 0) {
+                    setIsModalOpen(true);
+                  } else {
+                    executeCommand();
+                  }
+                }}
                 isDisabled={isCmdLoad}
               />
             </>

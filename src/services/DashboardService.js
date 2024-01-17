@@ -15,6 +15,12 @@ export const getListProjects = async () => {
   return response;
 };
 
+export const getProfile = async () => {
+  const response = await axiosInstance.get(`${partURL}/get-profile`);
+
+  return response;
+};
+
 export const updateProject = async (id_project, new_nameProject) => {
   const response = await axiosInstance.put(`${partURL}/update-name-project/${id_project}`,
     { new_nameProject }
